@@ -104,6 +104,14 @@ const TravelMode = {
 };
 
 /**
+   * toggles the activation of the generate route button
+   */
+function setStateGenerateRouteButton(condition) {
+  const button = document.getElementById('generate-route-btn'); 
+  button.disabled = condition;
+}
+
+/**
  * Defines instance of Commutes widget to be instantiated when Map library
  * loads.
  */
@@ -151,7 +159,7 @@ function Commutes(configuration) {
 
     configuration.defaultTravelModeEnum = TravelMode.DRIVING;
     //parseTravelModeEnum(configuration.defaultTravelMode);
-    setTravelModeLayer(configuration.defaultTravelModeEnum);
+    //setTravelModeLayer(configuration.defaultTravelModeEnum);
     createMarker(origin);
   }
 
@@ -539,10 +547,12 @@ function Commutes(configuration) {
       showElement(commutesEl.initialStatePanel, commutesEl.initialStatePanel);
       hideElement(commutesEl.destinationPanel);
       activeDestinationIndex = undefined;
+      setStateGenerateRouteButton(true); 
       return;
     }
     destinationPanelEl.container.addEventListener('scroll', handlePanelScroll);
     destinationPanelEl.container.dispatchEvent(new Event('scroll'));
+    setStateGenerateRouteButton(false);  
   }
 
   /**
@@ -742,7 +752,7 @@ function Commutes(configuration) {
 
     activeDestinationIndex = destinationIdx;
 
-    setTravelModeLayer(destination.travelModeEnum);
+    // setTravelModeLayer(destination.travelModeEnum);
     // Add active class
     const newDestinationEl = destinationPanelEl.list.querySelectorAll(
       '.destination')[destinationIdx];

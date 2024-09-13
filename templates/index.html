@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Page with Flask and Bootstrap</title>
+    <title>Most Efficient Route Generator</title>
     <!-- Enlace a Bootstrap CSS -->
     <link href="{{ url_for('static', filename='styles/mapstyle.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet">
@@ -24,8 +24,11 @@
         </div>
 
         <div class="action_tools">
-            <h2>Most Efficient Route Calculator</h2>
-            
+            <h2>Most Efficient Route Generator</h2>
+            <p>Once you selected one route or more, please press the button to start.</p>
+            <button id="generate-route-btn" disabled onclick="generateRoute()">
+                Generate Route
+            </button>
         </div>
     </div>
 

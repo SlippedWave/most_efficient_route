@@ -49,3 +49,26 @@
     border-radius: 5px;
     background-color: #f1f1f1;
   }
+
+  #generate-route-btn {
+    width: 100%;
+    background-color: #b64825; /* Orange background color */
+    color: white; /* White text color */
+    font-weight: bold; /* Bold text */
+    border: 2px solid #943b20; /* Border with a darker orange shade */
+    padding: 15px 10px; /* Padding to make the button larger */
+    border-radius: 25px; /* Rounded corners */
+    cursor: not-allowed; /* Disabled cursor style */
+    opacity: 0.6; /* Slightly transparent when disabled */
+    font-size: 20px; /* Font size */
+}
+
+#generate-route-btn:enabled {
+    cursor: pointer; /* Change cursor when the button is enabled */
+    opacity: 1; /* Fully opaque when enabled */
+}
+
+#generate-route-btn:hover:enabled {
+    background-color: #e67e22; /* Darker orange on hover when enabled */
+    border-color: #e74c3c; /* Change border color on hover */
+}
