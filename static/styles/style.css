@@ -1,0 +1,51 @@
+.header {
+    background-color: #b64825;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    /* Centra el contenido verticalmente */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Agrega una sombra suave */
+}
+
+.main_area {
+    background-color: #f4f0e9;
+    height: 100%;
+}
+
+.logo {
+    height: 80px;
+    /* Ajusta el tamaño del logo */
+    width: auto;
+    /* Mantiene la proporción original */
+}
+
+.logo_text {
+    color: antiquewhite;
+    font-size: x-large;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between; /* Para separar el contenido */
+    margin: 20px;
+    height: 85%;
+  }
+
+  /* Estilo del rectángulo principal (content-rectangle) */
+  .content-rectangle {
+    width: 70%; /* Ocupa el 70% del ancho de la pantalla */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+
+  /* Estilo del contenedor de herramientas (action_tools) */
+  .action_tools {
+    width: 25%; /* Define un tamaño considerable */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+  }

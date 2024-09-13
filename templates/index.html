@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Page with Flask and Bootstrap</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link href="{{ url_for('static', filename='styles/mapstyle.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet">
+
+</head>
+
+<body class="main_area">
+    <!-- Encabezado -->
+    <header class="header">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+        <p class="logo_text">Mercado Cerrado</p>
+    </header>
+
+    <div class="container">
+        <div class="content-rectangle">
+            {% include 'map.html' %}
+        </div>
+
+        <div class="action_tools">
+            <h2>Most Efficient Route Calculator</h2>
+            
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Scripts de Bootstrap y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="{{ url_for('static', filename='js/maps.js') }}"></script>
+    <script>
+        const CONFIGURATION = {
+            "defaultTravelMode": "DRIVING",
+            "distanceMeasurementType": "METRIC",
+            "mapOptions": { "center": { "lat": 20.7077314, "lng": -103.3515091 }, "fullscreenControl": true, "mapTypeControl": false, "streetViewControl": false, "zoom": 14, "zoomControl": true, "maxZoom": 20, "mapId": "" },
+            "mapsApiKey": "{{ MAPS_API_KEY }}"
+        };
+
+        function initMap() {
+            new Commutes(CONFIGURATION);
+        }
+    </script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key={{ MAPS_API_KEY }}&callback=initMap&libraries=places,geometry&solution_channel=GMP_QB_commutes_v2_c"
+        async defer></script>
+</body>
+
+</html>
