@@ -111,6 +111,50 @@ function setStateGenerateRouteButton(condition) {
   button.disabled = condition;
 }
 
+let destinations = [];
+
+
+function generateRoute() {
+  // Assuming `destinations` is already populated from the Commutes function
+  if (!destinations.length) {
+      alert("No destinations selected.");
+      return;
+  }
+
+  // Extract only the necessary data (e.g., name, place_id, lat, lng)
+  const simplifiedDestinations = destinations.map(destination => ({
+      name: destination.name,
+      place_id: destination.place_id,
+      lat: destination.marker.position.lat(),  // Assuming the marker has a position object with lat method
+      lng: destination.marker.position.lng()   // Assuming the marker has a position object with lng method
+  }));
+
+  // Send the simplified destinations list to the Flask backend
+  fetch('/generate_route', {
+      method: 'POST', // Sending data as a POST request
+      headers: {
+          'Content-Type': 'application/json' // Data type being sent is JSON
+      },
+      body: JSON.stringify({ destinations: simplifiedDestinations }) // Stringify the simplified array
+  })
+  .then(response => {
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      return response.json(); // Parse the JSON response
+  })
+  .then(data => {
+      console.log('Route generated successfully:', data);
+      alert('Route generated successfully!');
+      // Handle the returned route data here (e.g., display the optimized route on the map)
+  })
+  .catch(error => {
+      console.error('Error generating the route:', error);
+  });
+}
+
+
+
 /**
  * Defines instance of Commutes widget to be instantiated when Map library
  * loads.
@@ -119,9 +163,11 @@ function Commutes(configuration) {
   let commutesMap;
   let activeDestinationIndex;
   let origin = configuration.mapOptions.center;
-  let destinations = configuration.destination || [];
+  destinations = configuration.destination || [];
   let markerIndex = 0;
   let lastActiveEl;
+
+
 
   const markerIconConfig = {
     path:
