@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from extensions import connect_with_connector
+from sqlalchemy import text
 import os
 
 def create_app():
@@ -18,14 +19,19 @@ def create_app():
         
     @app.route('/test-connection')
     def test_connection():
-
         try:
+            # Connect using SQLAlchemy's connection pooling
             with pool.connect() as conn:
-                result = conn.execute("SELECT 1") 
-                rows = [row for row in result]
-            return f"Connection successful! Query result: {rows}"
+                # Execute the query to fetch table names
+                result = conn.execute(text("SHOW TABLES"))
+                
+                # Collect the table names from the result set
+                rows = [row[0] for row in result.fetchall()]  # result.fetchall() retrieves all rows
+                
+            return f"Connection successful! Table names: {rows}"
         except Exception as e:
             return f"An error occurred: {e}", 500
+
         
     return app
 
