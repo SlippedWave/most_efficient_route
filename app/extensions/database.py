@@ -6,6 +6,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine import url
 import sqlalchemy
+from dotenv import load_dotenv
+load_dotenv()
+
 
 db = SQLAlchemy()
 

@@ -1,4 +1,4 @@
-from ..extensions.database import db
+from extensions.database import db
 
 class Status(db.Model):
     __tablename__ = "status" 

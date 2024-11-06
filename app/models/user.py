@@ -1,4 +1,4 @@
-from ..extensions.database import db
+from extensions.database import db
 from datetime import datetime
 
 class User(db.Model):

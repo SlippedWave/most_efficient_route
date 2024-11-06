@@ -1,11 +1,10 @@
 from flask import Flask, render_template
-from .extensions.database import db, uri
+from extensions.database import db, uri
 from flask_migrate import Migrate
 from sqlalchemy import text
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
 
 migrate = Migrate() 
 
@@ -17,7 +16,7 @@ def create_app():
 
     db.init_app(app) 
     
-    from .models import User, Permit, Package, Status 
+    from models import User, Permit, Package, Status 
     
     migrate.init_app(app, db)
     
