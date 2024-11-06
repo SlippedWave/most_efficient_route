@@ -11,13 +11,13 @@ Make sure you have the following installed:
 - Python 3.x
 - Anaconda or Miniconda
 
-#### 1. Clone this repository
+**1. Clone this repository**
 ```
 git clone https://github.com/CUCEIStudents/most_efficient_route
-
 ```
-#### 2. Within Anaconda prompt
-Execute the following commands in order to configure the virtual environment.
+**2. Create and Configure virtual environment**
+
+Within Anaconda prompt, execute the following commands in order to configure the virtual environment.
 ```
 (base) root> python -m venv .venv
 (base) root> .venv\Scripts\activate
