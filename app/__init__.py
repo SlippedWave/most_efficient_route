@@ -1,12 +1,25 @@
 from flask import Flask, render_template
-from extensions import connect_with_connector
+from .extensions.database import db, uri
+from flask_migrate import Migrate
 from sqlalchemy import text
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+migrate = Migrate() 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask (__name__)
     
-    pool = connect_with_connector()
+    app.config["SQLALCHEMY_DATABASE_URI"] = uri.render_as_string(hide_password=False)
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]= True
+
+    db.init_app(app) 
+    
+    from .models import User, Permit, Package, Status 
+    
+    migrate.init_app(app, db)
     
     @app.route('/') 
     @app.route('/index')
@@ -21,7 +34,7 @@ def create_app():
     def test_connection():
         try:
             # Connect using SQLAlchemy's connection pooling
-            with pool.connect() as conn:
+            with db.session.connection() as conn:
                 # Execute the query to fetch table names
                 result = conn.execute(text("DESCRIBE users"))
                 

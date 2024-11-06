@@ -1,10 +1,10 @@
-from ..extensions import db
+from ..extensions.database import db
 from datetime import datetime
 
 class Package(db.Model):
     __tablename__ = "packages"
 
-    PCK_package_Id = db.Column(db.Integer, primary_key=True)
+    PCK_packageId = db.Column(db.Integer, primary_key=True)
     PCK_USR_assigned_to = db.Column(db.Integer, db.ForeignKey('users.USR_userId'))  
     PCK_USR_assigned_by = db.Column(db.Integer, db.ForeignKey('users.USR_userId'))  
     PCK_street = db.Column(db.String(200), nullable=False)  
@@ -17,7 +17,7 @@ class Package(db.Model):
     PCK_special_instructions = db.Column(db.String(200), nullable=True)  
     PCK_client_name = db.Column(db.String(100), nullable=False)     
     PCK_client_phone_num = db.Column(db.String(15), nullable=False)               
-    PCK_ST_status_Id = db.Column(db.Integer, db.ForeignKey('status.ST_statusId')) 
+    PCK_ST_statusId = db.Column(db.Integer, db.ForeignKey('status.ST_statusId')) 
     PCK_last_modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     PCK_delivery_date = db.Column(db.DateTime, nullable=True)
 
