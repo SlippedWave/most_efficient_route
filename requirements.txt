@@ -2,6 +2,7 @@ aiofiles==24.1.0
 aiohappyeyeballs==2.4.3
 aiohttp==3.10.10
 aiosignal==1.3.1
+alembic==1.14.0
 async-timeout==4.0.3
 attrs==24.2.0
 blinker==1.8.2
@@ -14,12 +15,15 @@ cloud-sql-python-connector==1.13.0
 colorama==0.4.6
 cryptography==43.0.3
 Flask==3.0.3
+Flask-Migrate==4.0.7
+Flask-SQLAlchemy==3.1.1
 frozenlist==1.5.0
 google-auth==2.35.0
 greenlet==3.1.1
 idna==3.8
 itsdangerous==2.2.0
 Jinja2==3.1.4
+Mako==1.3.6
 MarkupSafe==2.1.5
 multidict==6.1.0
 propcache==0.2.0

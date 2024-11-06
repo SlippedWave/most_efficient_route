@@ -23,7 +23,7 @@ def create_app():
             # Connect using SQLAlchemy's connection pooling
             with pool.connect() as conn:
                 # Execute the query to fetch table names
-                result = conn.execute(text("SHOW TABLES"))
+                result = conn.execute(text("DESCRIBE users"))
                 
                 # Collect the table names from the result set
                 rows = [row[0] for row in result.fetchall()]  # result.fetchall() retrieves all rows
