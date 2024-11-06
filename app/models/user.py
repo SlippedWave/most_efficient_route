@@ -13,6 +13,7 @@ class User(db.Model):
     USR_name = db.Column(db.String(80), nullable=False)     
     USR_last_name = db.Column(db.String(80), nullable=False) 
     USR_ST_statusId = db.Column(db.Integer, db.ForeignKey('status.ST_statusId'))
+    USR_address = db.Column(db.String(50),  nullable = True)
     USR_last_modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     permit = db.relationship("Permit", backref="users") 
