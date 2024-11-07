@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from extensions.database import db, uri
+from app.extensions.database import db, uri, get_db_session
 from flask_migrate import Migrate
 from sqlalchemy import text
 import os
@@ -15,8 +15,7 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]= True
 
     db.init_app(app) 
-    
-    from models import User, Permit, Package, Status 
+    from app.models import User, Permit, Package, Status 
     
     migrate.init_app(app, db)
     
@@ -29,21 +28,30 @@ def create_app():
             MAPS_API_KEY=maps_api_key
         )
         
+    
+        
+    @app.route('/test-connection')
     @app.route('/test-connection')
     def test_connection():
         try:
-            # Connect using SQLAlchemy's connection pooling
-            with db.session.connection() as conn:
-                # Execute the query to fetch table names
-                result = conn.execute(text("DESCRIBE users"))
-                
-                # Collect the table names from the result set
-                rows = [row[0] for row in result.fetchall()]  # result.fetchall() retrieves all rows
-                
-            return f"Connection successful! Table names: {rows}"
+            # Get a session from the database
+            session = get_db_session()  # Get a new session
+
+            # Query the permits table to get all records
+            permits = session.query(Permit).all()  # This will use SQLAlchemy ORM
+
+            # If there are permits, return their names (or any field you need)
+            if permits:
+                permit_names = [permit.name for permit in permits]  # Adjust to the actual field name in Permit
+                return f"Connection successful! Permit names: {permit_names}"
+            else:
+                return "No permits found in the database."
         except Exception as e:
             return f"An error occurred: {e}", 500
-
+        
+        finally:
+            # Ensure that the session is closed after the query
+            session.close()
         
     return app
 

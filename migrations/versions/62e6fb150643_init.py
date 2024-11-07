@@ -1,8 +1,8 @@
-"""Init
+"""init
 
-Revision ID: 21b19599b3a1
+Revision ID: 62e6fb150643
 Revises: 
-Create Date: 2024-11-06 14:59:26.850004
+Create Date: 2024-11-06 16:50:57.844463
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '21b19599b3a1'
+revision = '62e6fb150643'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,6 +26,7 @@ def upgrade():
     op.create_table('status',
     sa.Column('ST_statusId', sa.Integer(), nullable=False),
     sa.Column('ST_value', sa.String(length=80), nullable=False),
+    sa.Column('ST_status_type', sa.Integer(), nullable=False),
     sa.PrimaryKeyConstraint('ST_statusId')
     )
     op.create_table('users',
@@ -38,6 +39,7 @@ def upgrade():
     sa.Column('USR_name', sa.String(length=80), nullable=False),
     sa.Column('USR_last_name', sa.String(length=80), nullable=False),
     sa.Column('USR_ST_statusId', sa.Integer(), nullable=True),
+    sa.Column('USR_address', sa.String(length=50), nullable=True),
     sa.Column('USR_last_modified', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['USR_PER_permitId'], ['permits.PMT_permitId'], ),
     sa.ForeignKeyConstraint(['USR_ST_statusId'], ['status.ST_statusId'], ),

@@ -1,11 +1,9 @@
 import os
-from google.cloud.sql.connector import Connector, IPTypes
 from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine import url
-import sqlalchemy
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -29,7 +27,4 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def get_db_session():
     db_session = SessionLocal() 
-    try:
-        yield db_session 
-    finally:
-        db_session.close() 
+    return db_session
