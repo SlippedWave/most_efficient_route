@@ -4,6 +4,8 @@ from flask_migrate import Migrate
 from sqlalchemy import text
 import os
 from dotenv import load_dotenv
+import bcrypt
+
 
 
 migrate = Migrate() 
@@ -28,21 +30,14 @@ def create_app():
             MAPS_API_KEY=maps_api_key
         )
         
-    
-        
     @app.route('/test-connection')
     @app.route('/test-connection')
     def test_connection():
         try:
-            # Get a session from the database
-            session = get_db_session()  # Get a new session
-
-            # Query the permits table to get all records
-            permits = session.query(Permit).all()  # This will use SQLAlchemy ORM
-
-            # If there are permits, return their names (or any field you need)
+            session = get_db_session()  
+            permits = session.query(Permit).all() 
             if permits:
-                permit_names = [permit.name for permit in permits]  # Adjust to the actual field name in Permit
+                permit_names = [permit.PMT_permitId for permit in permits]  
                 return f"Connection successful! Permit names: {permit_names}"
             else:
                 return "No permits found in the database."
@@ -50,11 +45,11 @@ def create_app():
             return f"An error occurred: {e}", 500
         
         finally:
-            # Ensure that the session is closed after the query
             session.close()
+            
         
     return app
 
 if __name__ == "__main__":
     app = create_app()
-    app.run(host="0.0.0.0", port=8001, debug=True)
+    app.run()

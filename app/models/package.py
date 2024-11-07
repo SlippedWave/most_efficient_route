@@ -21,9 +21,16 @@ class Package(db.Model):
     PCK_last_modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     PCK_delivery_date = db.Column(db.DateTime, nullable=True)
 
-    user = db.relationship("User", backref="packages")  
-    status = db.relationship("Status", backref="packages")  
+    assigned_to_user = db.relationship(
+        "User", foreign_keys=[PCK_USR_assigned_to], backref="assigned_packages"
+    )
+    assigned_by_user = db.relationship(
+        "User", foreign_keys=[PCK_USR_assigned_by], backref="created_packages"
+    )
 
+    status = db.relationship("Status", backref="packages")
+    
+    
     def __repr__(self):
         return (f"<Paquete {self.PCK_package_Id} para {self.PCK_client_name} en "
                 f"{self.PCK_street}, {self.PCK_ext_number}, asignado a {self.PCK_USR_assigned_to}>")
