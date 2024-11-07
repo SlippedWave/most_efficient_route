@@ -7,4 +7,4 @@ class LogoutView(MethodView):
     def get(self):
         logout_user()
         flash('¡Hasta pronto!', 'success')  
-        return redirect(url_for('index')) 
+        return redirect('/')  # Use url_for for more flexibility 

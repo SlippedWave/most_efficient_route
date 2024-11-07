@@ -1,4 +1,4 @@
-{% set title="???" %}
+{% set title="Beaver Deliver" %}
 
 {% block favicons %}
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -15,12 +15,12 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="#">????</a>
+                    <a class="brand" href="/">Beaver Deliver</a>
 
                     <div class="nav-collapse">
                         <ul class="nav">
-                            <li class="active"><a href="#">Inicio</a></li>
-                            {% if current_user.is_authenticated() %}
+                            <li class="active"><a href="/">Inicio</a></li>
+                            {% if current_user.is_authenticated %}
                                 <li><a href="{{ url_for('auth.logout') }}">Cerrar sesión</a></li>
                             {% else %}
                                 <li><a href="{{ url_for('auth.login') }}">Iniciar sesión</a></li>

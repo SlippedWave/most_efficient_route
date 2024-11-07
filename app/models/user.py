@@ -34,7 +34,10 @@ class User(db.Model):
         self.USR_password = bcrypt.hashpw(plain_password.encode('utf-8'), salt)
 
     def check_password(self, plain_password):
-        return bcrypt.checkpw(plain_password.encode('utf-8'), self.USR_password)
+        return bcrypt.checkpw(plain_password.encode('utf-8'), self.USR_password.encode('utf-8'))
+    
+    def get_id(self):
+        return self.USR_userId
     
     def is_authenticated(self):
         return True

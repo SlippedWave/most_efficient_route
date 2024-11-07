@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block middle_column %}
 <h1>Iniciar Sesión</h1>
 <form action="" method="post" name="login" class="form-horizontal well well-large">
     {{form.hidden_tag()}}
@@ -29,3 +32,4 @@
         </div>
     </div>
 </form>
+{% endblock %}

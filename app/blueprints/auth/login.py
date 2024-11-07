@@ -30,7 +30,7 @@ class LoginView(MethodView):
                     session.permanent = not form.remember_me.data
                     flash('¡Inicio de sesión exitoso!', 'success')
                     session['remember_me'] = form.remember_me.data
-                    return redirect(request.args.get('next') or url_for('/'))  # Use url_for for more flexibility
+                    return redirect(request.args.get('next') or '/')  # Use url_for for more flexibility
                 else:
                     flash('¡Este usuario está deshabilitado!', 'error')
             else:
