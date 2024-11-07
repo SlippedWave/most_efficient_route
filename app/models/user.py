@@ -1,6 +1,6 @@
-from app.extensions.database import db
 from datetime import datetime
 import bcrypt
+from app.extensions.database import db
 
 class User(db.Model):
     __tablename__ = "users"
@@ -13,18 +13,37 @@ class User(db.Model):
     USR_name = db.Column(db.String(80), nullable=False)     
     USR_last_name = db.Column(db.String(80), nullable=False) 
     USR_ST_statusId = db.Column(db.Integer, db.ForeignKey('status.ST_statusId'))
-    USR_address = db.Column(db.String(150),  nullable = True)
+    USR_address = db.Column(db.String(150), nullable=True)
     USR_last_modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     permit = db.relationship("Permit", backref="users") 
     status = db.relationship("Status", backref="users") 
-    
+
+    def __init__(self, USR_email, plain_password, USR_name, USR_last_name, USR_telephone=None, USR_address=None, USR_PER_permitId=None, USR_ST_statusId=None):
+        self.USR_email = USR_email
+        self.set_password(plain_password)
+        self.USR_name = USR_name
+        self.USR_last_name = USR_last_name
+        self.USR_telephone = USR_telephone
+        self.USR_address = USR_address
+        self.USR_PER_permitId = USR_PER_permitId
+        self.USR_ST_statusId = USR_ST_statusId
+
     def set_password(self, plain_password):
         salt = bcrypt.gensalt()
         self.USR_password = bcrypt.hashpw(plain_password.encode('utf-8'), salt)
 
     def check_password(self, plain_password):
         return bcrypt.checkpw(plain_password.encode('utf-8'), self.USR_password)
+    
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True if self.status == 6 else False
+    
+    def get_permit(self):
+        return self.permit.PMT_type
     
     def __repr__(self):
         return f"<Usuario {self.USR_name} {self.USR_last_name}, {self.USR_userId}>"

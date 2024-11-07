@@ -6,5 +6,8 @@ class Permit(db.Model):
     PMT_permitId = db.Column(db.Integer, primary_key=True)  
     PMT_type = db.Column(db.String(80), nullable=False) 
 
+    def __init__(self, PMT_type):
+        self.PMT_type = PMT_type
+
     def __repr__(self):
-        return f"<Permiso {self.PMT_type}, {self.PMT_permit_Id}>"  
+        return f"<Permiso {self.PMT_type}, {self.PMT_permitId}>"

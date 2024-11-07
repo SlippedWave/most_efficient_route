@@ -1,0 +1,31 @@
+<h1>Iniciar Sesión</h1>
+<form action="" method="post" name="login" class="form-horizontal well well-large">
+    {{form.hidden_tag()}}
+    <h3>Por favor ingresa tus datos de acceso:</h3>
+    <div class="control-group">
+        <label class="control-label" for="email">Correo Electrónico</label>
+        <div class="controls">
+          {{form.email(size=80)}}
+        </div>
+    </div>
+    {% for error in form.errors.username %}
+    <span style="color: red;">[{{error}}]</span>
+    {% endfor %}
+    <div class="control-group">
+        <label class="control-label" for="password">Contraseña</label>
+        <div class="controls">
+          {{form.password(size=80)}}
+        </div>
+    </div>
+    {% for error in form.errors.password %}
+    <span style="color: red;">[{{error}}]</span>
+    {% endfor %}
+    <div class="control-group">
+        <div class="controls">
+          <label class="checkbox">
+            {{form.remember_me}} Recuérdame
+          </label>
+          <button type="submit" class="btn">Iniciar sesión</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,11 @@
+<div class="hero-unit">
+  <h1>¡Bienvenido!</h1>
+  <p>Esto es Beaver Deliver. Por favor, use los botones a continuación para continuar.</p>
+  <p>
+    {% if authenticated %}
+      <a href="{{ url_for('auth.logout') }}" class="btn btn-primary btn-large">Cerrar sesión</a>
+    {% else %}
+      <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-large">Iniciar sesión</a>
+    {% endif %}
+  </p>
+</div>

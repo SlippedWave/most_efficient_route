@@ -4,9 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine import url
-from dotenv import load_dotenv
-load_dotenv()
-
 
 db = SQLAlchemy()
 
