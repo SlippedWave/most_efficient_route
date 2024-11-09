@@ -48,5 +48,9 @@ class User(db.Model):
     def get_permit(self):
         return self.permit.PMT_type
     
+    def save(self):
+        db.session.add(self)  
+        db.session.commit()    
+    
     def __repr__(self):
         return f"<Usuario {self.USR_name} {self.USR_last_name}, {self.USR_userId}>"

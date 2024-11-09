@@ -9,7 +9,7 @@ def authorized(checker):
 
     Meant to be used inside views and templates to protect part of resources.
     """
-    return current_user.is_authenticated() and checker()
+    return current_user.is_authenticated and checker()
 
 
 def require(checker):
@@ -18,32 +18,22 @@ def require(checker):
     decorated view.  For example::
 
         @app.route('/protected')
-        @require(Any(IsUser('root'), InGroups('admins')))
+        @require(Any(is_user('id'), HasPermitType('admins')))
         def protected():
             pass
 
     """
     def decorator(fn):
         def wrapped_function(*args, **kwargs):
-            if not current_user.is_authenticated():
+            if not current_user.is_authenticated:
                 return current_app.login_manager.unauthorized()
             if not checker():
                 abort(403)
             return fn(*args, **kwargs)
         return update_wrapper(wrapped_function, fn)
     return decorator
-
-
-class HasPermissions(object):
-    """Check if current user has provided permissions."""
-
-    def __init__(self, *args):
-        self.permissions = set(args)
-
-    def __call__(self):
-        return self.permissions <= current_user.has_permissions()
     
-class HasPermitType(object):
+class has_permit_type(object):
     """Check if the current user's permit matches any of the provided permit types."""
 
     def __init__(self, *permit_types):

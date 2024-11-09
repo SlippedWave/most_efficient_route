@@ -15,11 +15,14 @@ click==8.1.7
 cloud-sql-python-connector==1.13.0
 colorama==0.4.6
 cryptography==43.0.3
+dominate==2.9.1
 Flask==3.0.3
+Flask-Bootstrap==3.3.7.1
 Flask-DebugToolbar==0.16.0
 Flask-Login==0.6.3
 Flask-Migrate==4.0.7
 Flask-SQLAlchemy==3.1.1
+Flask-WTF==1.2.2
 frozenlist==1.5.0
 google-auth==2.35.0
 greenlet==3.1.1
@@ -40,5 +43,7 @@ rsa==4.9
 SQLAlchemy==2.0.36
 typing_extensions==4.12.2
 urllib3==2.2.3
+visitor==0.1.3
 Werkzeug==3.0.4
+WTForms==3.2.1
 yarl==1.17.1

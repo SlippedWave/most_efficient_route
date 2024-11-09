@@ -7,6 +7,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 import os
 from dotenv import load_dotenv
+from flask_bootstrap import Bootstrap
 
 from app.extensions.auth import authorized
 from app.extensions.database import db, uri
@@ -30,7 +31,7 @@ app.config['DEBUG'] = True
 db.init_app(app)
 login_manager = LoginManager(app)
 app.jinja_env.globals['authorized'] = authorized
-
+Bootstrap(app)
 
 # Enable debug toolbar only in debug mode
 if app.debug:
@@ -42,12 +43,12 @@ register_blueprints(app)
 # Error handlers
 @app.errorhandler(404)
 def not_found_error(error):
-    return render_template('404.html'), 404
+    return render_template('errors/404.html'), 404
 
 @app.errorhandler(500)
 def internal_error(error):
     db.session.rollback()
-    return render_template('500.html'), 500
+    return render_template('errors/500.html'), 500
 
 from app.models import *
 @login_manager.user_loader
