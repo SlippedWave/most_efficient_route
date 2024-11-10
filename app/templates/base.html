@@ -21,9 +21,9 @@
                         <ul class="nav">
                             <li class="active"><a href="/">Inicio</a></li>
                             {% if current_user.is_authenticated %}
-                                <li><a href="{{ url_for('auth.cerrar_sesion') }}">Cerrar sesión</a></li>
+                                <li><a href="{{ url_for('auth.logout') }}">Cerrar sesión</a></li>
                             {% else %}
-                                <li><a href="{{ url_for('auth.iniciar_sesion') }}">Iniciar sesión</a></li>
+                                <li><a href="{{ url_for('auth.login') }}">Iniciar sesión</a></li>
                             {% endif %}
                             <!--<li><a href="#about">Acerca de</a></li>
                             <li><a href="#contact">Contacto</a></li>-->

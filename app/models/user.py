@@ -43,7 +43,7 @@ class User(db.Model):
         return True
 
     def is_active(self):
-        return True if self.status == 6 else False
+        return self.status and self.status.ST_value == "ACTIVO"
     
     def get_permit(self):
         return self.permit.PMT_type

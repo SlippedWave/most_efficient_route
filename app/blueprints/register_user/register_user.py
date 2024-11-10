@@ -1,30 +1,21 @@
-import uuid
-
 from flask import render_template, flash, redirect, request, session
 from flask.views import MethodView
 from flask_login import current_user
 
 from app.models import User
 from app.blueprints.register_user.register_user_form import RegisterUserForm
-from app.extensions.auth import require
+from app.extensions.auth import require, has_permit_type
 
 class RegisterUserView(MethodView):
-    @require(lambda: current_user.has_permit_type("Administrador", "Almacenista"))
+    @require(lambda: has_permit_type("Administrador"))
     def get(self):
         form = RegisterUserForm()
-        session['form_token'] = str(uuid.uuid4())  
         return render_template(
-            "templates/register_user.html", title="Registrar nuevo usuario", form=form, form_token=session['form_token']
+            "register_user/register_user.html", title="Registrar nuevo usuario", form=form, form_token=session['form_token']
         )
 
     def post(self):
         form = RegisterUserForm()
-        form_token = request.form.get('form_token')
-
-        if form_token != session.get('form_token'):
-            flash("Este formulario ya fue registrado.", "error")
-            return redirect('/registrar_usuario')  
-
         existing_user = User.query.filter_by(USR_email=form.email.data).first()
         if existing_user:
             flash("¡El correo electrónico ya está registrado!", "error")
@@ -51,12 +42,10 @@ class RegisterUserView(MethodView):
             form.permit.data = ''
             form.status.data = ''
 
-            session.pop('form_token', None)
-
             return render_template(
-                "templates/register_user.html", title="Registrar nuevo usuario", form=form
+                "register_user/register_user.html", title="Registrar nuevo usuario", form=form
             )
         
         return render_template(
-            "templates/register_user.html", title="Registrar nuevo usuario", form=form
+            "register_user/register_user.html", title="Registrar nuevo usuario", form=form
         )
