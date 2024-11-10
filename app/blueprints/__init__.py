@@ -1,6 +1,6 @@
 ENABLED_VIEWS = [
     'app.blueprints.auth',
-    'app.blueprints.register_user',
+    'app.blueprints.manage_users',
     'app.blueprints.home',
 ]
 

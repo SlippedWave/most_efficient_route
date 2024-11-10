@@ -76,11 +76,7 @@
     <div class="control-group">
         <label class="control-label" for="status">Estado</label>
         <div class="controls">
-            <select class="form-control" id="status" name="status">
-                <option value="1">Activo</option>
-                <option value="2">Inactivo</option>
-                <!-- Add other status options as necessary -->
-            </select>
+            {{ form.status(class="form-control") }}
         </div>
     </div>
     {% for error in form.status.errors %}
@@ -91,16 +87,13 @@
     <div class="control-group">
         <label class="control-label" for="permit">Tipo de Usuario</label>
         <div class="controls">
-            <select class="form-control" id="permit" name="permit">
-                <option value="1">Administrador</option>
-                <option value="2">Almacenista</option>
-                <!-- Add other permit types as necessary -->
-            </select>
+            {{ form.permit(class="form-control") }}
         </div>
     </div>
     {% for error in form.permit.errors %}
     <span style="color: red;">[{{ error }}]</span>
     {% endfor %}
+
 
     <!-- Submit Button -->
     <div class="control-group">
