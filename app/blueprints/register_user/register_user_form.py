@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired, Email, Regexp
 class RegisterUserForm(FlaskForm):
     email = StringField('Correo electrónico', validators=[DataRequired(), Email()])
     telephone = StringField('Teléfono', validators=[DataRequired(), Regexp('^\d{10}$')])
-    plain_password = PasswordField('Contraseña', validators=[DataRequired(), Regexp()])
+    plain_password = PasswordField('Contraseña', validators=[DataRequired(), Regexp('^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.{8,})')])
     name = StringField('Nombre', validators=[DataRequired()])
     last_name = StringField('Apellido', validators=[DataRequired()])
     address = StringField('Dirección', validators=[DataRequired()])
