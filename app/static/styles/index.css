@@ -1,0 +1,93 @@
+html {
+    font-family: "Roboto", sans-serif;
+    height: 100%;
+    margin: 0;
+    background: rgb(246,164,119);
+    background: linear-gradient(180deg, rgba(246,164,119,1) 4%, rgba(237,116,59,1) 34%, rgba(188,74,33,1) 67%, rgba(185,70,34,1) 85%, rgba(217,80,42,1) 100%);
+}
+
+.hero-unit {
+    max-width: 600px;
+    margin: 20vh auto; /* Ajustar el margen superior para una mejor visibilidad */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con algo de transparencia */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    animation: fadeIn 1s ease-in-out; /* Aplicar animación de fade-in */
+}
+
+.hero-unit h1 {
+    font-size: 2.5em; /* Cambia a un valor relativo con media queries */
+    color: #f05328; /* Color similar al logo */
+    margin-bottom: 20px;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.hero-unit p {
+    font-size: 1.2em; /* Cambia a un valor relativo con media queries */
+    color: #333;
+    margin-bottom: 20px;
+    animation: fadeIn 3s ease-in-out;
+}
+
+.btn {
+    display: inline-block;
+    font-size: 1.2em;
+    color: #fff;
+    background-color: #f05328;
+    padding: 10px 20px;
+    margin: 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #e04522; /* Un tono más oscuro al pasar el ratón */
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* ----- MEDIA QUERIES PARA RESPONSIVE DESIGN ----- */
+@media (max-width: 780px){
+    .hero-unit {
+        max-width: 80%;
+        margin: 20vh auto;
+        padding: 20px;
+        height: 50vh; /* Aumentar la altura del contenedor */
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Centrando verticalmente los elementos dentro de .hero-unit */
+        align-items: center;
+    }
+
+    .hero-unit h1 {
+        font-size: 2.5em; /* Aumentar el tamaño del texto para mejor legibilidad */
+    }
+
+    .hero-unit p {
+        font-size: 1.2em; /* Aumentar el tamaño del párrafo */
+        text-align: center;
+    }
+
+    .btn {
+        font-size: 1.2em; /* Ajustar el tamaño del texto del botón */
+        padding: 10px 20px;
+        width: 40vw; /* Hacer que el botón ocupe el 100% del ancho del contenedor */
+        margin: 10px 0; /* Separar verticalmente los botones */
+        text-align: center;
+    }
+
+    .btn + .btn {
+        margin-top: 10px; /* Añadir un margen entre los botones */
+    }
+}
