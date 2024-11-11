@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block middle_column %}
+<h1>Administrar Usuarios</h1>
+
+<table id="manage_users_table" class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre(s)</th>
+            <th>Apellidos</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th>Estatus</th>
+            <th>Permisos</th>
+            <th>Última vez modificado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.USR_userId }}</td>
+            <td>{{ user.USR_name }}</td>
+            <td>{{ user.USR_last_name }}</td>
+            <td>{{ user.USR_email }}</td>
+            <td>{{ user.USR_telephone }}</td>
+            <td>{{ user.status.ST_value }}</td>
+            <td>{{ user.permit.PMT_type }}</td>
+            <td>{{ user.USR_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td>
+                <a  class="btn btn-primary">Editar</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="9">No se encontraron registros.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready( function () {
+        $('#manage_users_table').DataTable();
+    });
+</script>
+
+{% endblock %}

@@ -33,6 +33,8 @@ login_manager = LoginManager(app)
 app.jinja_env.globals['authorized'] = authorized
 Bootstrap(app)
 
+from app.models import *
+
 # Enable debug toolbar only in debug mode
 if app.debug:
     DebugToolbarExtension(app)
@@ -50,7 +52,6 @@ def internal_error(error):
     db.session.rollback()
     return render_template('errors/500.html'), 500
 
-from app.models import *
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
