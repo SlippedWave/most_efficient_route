@@ -13,7 +13,7 @@ manage_users.add_url_rule(
     "/registrar_usuario", view_func=RegisterUserView.as_view("register_user")
 )
 manage_users.add_url_rule(
-    "/edit_user/<int:id>", view_func=EditUserView.as_view("edit_user")
+    "/editar_usuario/<int:id>", view_func=EditUserView.as_view("edit_user")
 )
 
 

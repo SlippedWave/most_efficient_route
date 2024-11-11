@@ -1,6 +1,5 @@
 from flask import render_template, flash, redirect, url_for
 from flask.views import MethodView
-from flask_login import current_user
 
 from app.models import User, Status, Permit
 from app.blueprints.manage_users.register_user_form import RegisterUserForm
@@ -41,7 +40,6 @@ class RegisterUserView(MethodView):
                     USR_address=form.USR_address.data,
                     USR_PER_permitId=form.permit.data.PMT_permitId,
                     USR_ST_statusId=form.status.data.ST_statusId,
-                    USR_modified_by = current_user.USR_userId
                 )
                 db.session.add(newUser)
                 db.session.commit()

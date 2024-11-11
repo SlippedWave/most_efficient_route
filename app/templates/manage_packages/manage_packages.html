@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+<!-- Add DataTables CSS in the head section -->
+<link href="
+https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/css/jquery.dataTables.min.css
+" rel="stylesheet">
+{% endblock %}
+
+{% block middle_column %}
+<h1>Administrar paquetes</h1>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" id="add-package-btn">
+    Registrar nuevo paquete
+</button>
+
+<table id="manage_packages_table" class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Dirección</th>
+            <th>Nombre del cliente</th>
+            <th>Teléfono</th>
+            <th>Estatus</th>
+            <th>Asignado a</th>
+            <th>Fecha de entrega</th>
+            <th>Última vez modificado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for package in packages %}
+        <tr>
+            <td>{{ package.PCK_packageId }}</td>
+            <td>{{ package.address.__repr__ }}</td>
+            <td>{{ package.PCK_client_name }}</td>
+            <td>{{ package.PCK_client_phone_num }}</td>
+            <td>{{ package.PCK_ST_statusId }}</td>
+            <td>{{ package.assigned_to_user.__repr__ }}</td>
+            <td>{{ package.PCK_delivery_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td>{{ package.PCK_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td>
+                <button class="btn btn-primary edit-package-btn" data-id="{{ package.PCK_packageId }}">PCK_packageId</button>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="8">No se encontraron registros.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block modals %}
+<div id="editPackageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Editar paquete"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="editPackageModalLabel">Editar paquete</h5>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addPackageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Agregar paquete"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="addPackageModal">Agregar paquete</h5>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="setAddressModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Agregar dirección"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="addAddressModal">Agregar dirección</h5>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+<!-- Add jQuery and DataTables JS in the scripts block -->
+<script src="
+https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/js/jquery.dataTables.min.js
+"></script>
+<script src="{{ url_for('static', filename='js/manage_packages.js') }}"></script>
+
+{% endblock %}

@@ -2,15 +2,15 @@ from flask import render_template, jsonify, request, redirect, url_for, flash
 from flask.views import MethodView
 from flask_login import current_user
 from app.models import User, Status, Permit
-from app.blueprints.manage_users.edit_user_form import EditUserForm
+from app.blueprints.manage_packages.edit_package_form import EditPackageForm
 from app.extensions.database import db
 
 
-class EditUserView(MethodView):
+class EditPackageView(MethodView):
 
     def get(self, id):
         user = User.query.get_or_404(id)
-        form = EditUserForm(obj=user)
+        form = EditPackageForm(obj=user)
 
         status_choices = [
             (status.ST_statusId, status.ST_value) for status in Status.query.all()
@@ -32,7 +32,7 @@ class EditUserView(MethodView):
     def post(self, id):
         user = User.query.get_or_404(id)
         
-        form = EditUserForm(request.form, obj=user)
+        form = EditPackageForm(request.form, obj=user)
 
         if form.validate_on_submit():
             user.USR_email = form.USR_email.data
@@ -42,8 +42,7 @@ class EditUserView(MethodView):
             user.USR_address = form.USR_address.data
 
             user.USR_PER_permitId = form.permit.data.PMT_permitId
-            user.USR_ST_statusId = form.status.data.ST_statusId
-            user.USR_modified_by = current_user.USR_userId
+            user.USR_ST_statusId = form.status.data.ST_statusId 
             
             plain_password = form.plain_password.data
             

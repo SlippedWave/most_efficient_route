@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <!-- Add custom styles or scripts for the modal -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block middle_column %}
+<!-- Modal Trigger Button -->
+<!-- Modal Structure -->
+<div id="userModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="userModalLabel">Registra al nuevo usuario</h5>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post" name="register_user" class="form-horizontal well well-large">
+          {{ form.hidden_tag() }}
+          <h3>Por favor ingresa los datos del nuevo usuario:</h3>
+
+          <!-- Email Field -->
+          <div class="control-group">
+              <label class="control-label" for="email">Correo Electrónico</label>
+              <div class="controls">
+                  {{ form.email(size=80) }}
+              </div>
+          </div>
+          {% for error in form.email.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          <!-- Telephone Field -->
+          <div class="control-group">
+              <label class="control-label" for="telephone">Teléfono</label>
+              <div class="controls">
+                  {{ form.telephone(size=80) }}
+              </div>
+          </div>
+          {% for error in form.telephone.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          <!-- Password Field -->
+          <div class="control-group">
+              <label class="control-label" for="plain_password">Contraseña</label>
+              <div class="controls">
+                  {{ form.plain_password(size=80) }}
+              </div>
+          </div>
+          {% for error in form.plain_password.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          <!-- Name Field -->
+          <div class="control-group">
+              <label class="control-label" for="name">Nombre</label>
+              <div class="controls">
+                  {{ form.name(size=80) }}
+              </div>
+          </div>
+          {% for error in form.name.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          <!-- Last Name Field -->
+          <div class="control-group">
+              <label class="control-label" for="last_name">Apellido</label>
+              <div class="controls">
+                  {{ form.last_name(size=80) }}
+              </div>
+          </div>
+          {% for error in form.last_name.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          <!-- Address Field -->
+          <div class="control-group">
+              <label class="control-label" for="address">Dirección</label>
+              <div class="controls">
+                  {{ form.address(size=80) }}
+              </div>
+          </div>
+          {% for error in form.address.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          <!-- Status Field -->
+          <div class="control-group">
+              <label class="control-label" for="status">Estado</label>
+              <div class="controls">
+                  {{ form.status(class="form-control") }}
+              </div>
+          </div>
+          {% for error in form.status.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          <!-- Permit Field -->
+          <div class="control-group">
+              <label class="control-label" for="permit">Tipo de Usuario</label>
+              <div class="controls">
+                  {{ form.permit(class="form-control") }}
+              </div>
+          </div>
+          {% for error in form.permit.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          <!-- Submit Button -->
+          <div class="control-group">
+              <div class="controls">
+                  <button type="submit" class="btn btn-primary">Registrar Usuario</button>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

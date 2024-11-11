@@ -14,12 +14,14 @@ class User(db.Model):
     USR_last_name = db.Column(db.String(80), nullable=False) 
     USR_ST_statusId = db.Column(db.Integer, db.ForeignKey('status.ST_statusId'))
     USR_address = db.Column(db.String(150), nullable=True)
+    USR_modified_by = db.Column(db.Integer, db.ForeignKey('users.USR_userId'), nullable= False)
     USR_last_modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     permit = db.relationship("Permit", backref="users") 
     status = db.relationship("Status", backref="users") 
+    modified_by = db.relationship("User", backref="users")
 
-    def __init__(self, USR_email, plain_password, USR_name, USR_last_name, USR_telephone=None, USR_address=None, USR_PER_permitId=None, USR_ST_statusId=None):
+    def __init__(self, USR_email, plain_password, USR_name, USR_last_name, USR_modified_by, USR_telephone=None, USR_address=None, USR_PER_permitId=None, USR_ST_statusId=None):
         self.USR_email = USR_email
         self.set_password(plain_password)
         self.USR_name = USR_name
@@ -28,6 +30,7 @@ class User(db.Model):
         self.USR_address = USR_address
         self.USR_PER_permitId = USR_PER_permitId
         self.USR_ST_statusId = USR_ST_statusId
+        self.USR_modified_by = USR_modified_by
 
     def set_password(self, plain_password):
         salt = bcrypt.gensalt()
@@ -53,4 +56,4 @@ class User(db.Model):
         db.session.commit()    
     
     def __repr__(self):
-        return f"<Usuario {self.USR_name} {self.USR_last_name}, {self.USR_userId}>"
+        return f"{self.USR_last_name}, Usuario {self.USR_name}"

@@ -1,0 +1,66 @@
+<form method="POST" action="{{ url }}" id="set_user_info"
+    class="form-horizontal">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        <label for="email" class="col-sm-10 control-label">Correo Electrónico</label>
+        <div class="col-sm-10">
+            {{ form.USR_email(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="telephone" class="col-sm-2 control-label">Teléfono</label>
+        <div class="col-sm-10">
+            {{ form.USR_telephone(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="name" class="col-sm-2 control-label">Nombre</label>
+        <div class="col-sm-10">
+            {{ form.USR_name(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="last_name" class="col-sm-2 control-label">Apellido</label>
+        <div class="col-sm-10">
+            {{ form.USR_last_name(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="address" class="col-sm-2 control-label">Dirección</label>
+        <div class="col-sm-10">
+            {{ form.USR_address(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="status" class="col-sm-2 control-label">Estado</label>
+        <div class="col-sm-10">
+            {{ form.status(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="permit" class="col-sm-2 control-label">Tipo de Usuario</label>
+        <div class="col-sm-10">
+            {{ form.permit(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="plain_password" class="col-sm-2 control-label">Contraseña</label>
+        <div class="col-sm-10">
+            {{ form.plain_password(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+        </div>
+    </div>
+</form>

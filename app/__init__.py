@@ -30,6 +30,7 @@ app.config['DEBUG'] = True
 db.init_app(app)
 login_manager = LoginManager(app)
 app.jinja_env.globals['authorized'] = authorized
+migrate = Migrate(app, db) 
 
 from app.models import *
 
@@ -54,7 +55,6 @@ def internal_error(error):
 def load_user(id):
     return User.query.get(int(id))
 
-migrate = Migrate(app) 
 # Logging configuration (only for production mode)
 if not app.debug:
     file_handler = RotatingFileHandler(

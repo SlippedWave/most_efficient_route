@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // Initialize DataTable
-    $('#manage_users_table').DataTable();
+    $('#manage_users_table').dataTable();
 
     $('button#add-user-btn').on('click', function () {
 
@@ -30,7 +30,7 @@ $(document).ready(function () {
         modalBody.html(''); 
 
         $.ajax({
-            url: '/edit_user/' + userId,
+            url: '/editar_usuario/' + userId,
             type: 'GET',
             dataType: 'html',
             success: function (response) {

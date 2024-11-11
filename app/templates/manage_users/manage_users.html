@@ -3,7 +3,9 @@
 {% block head %}
 {{ super() }}
 <!-- Add DataTables CSS in the head section -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<link href="
+https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/css/jquery.dataTables.min.css
+" rel="stylesheet">
 {% endblock %}
 
 {% block middle_column %}
@@ -39,7 +41,7 @@
             <td>{{ user.permit.PMT_type }}</td>
             <td>{{ user.USR_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             <td>
-                <button class="btn btn-primary edit-user-btn" data-id="{{ user.USR_userId }}">Editar</button>
+                <button class="btn btn-primary edit-user-btn" data-id="{{ user.USR_userId }}">Modificar</button>
             </td>
         </tr>
         {% else %}
@@ -92,8 +94,9 @@
 
 {% block scripts %}
 <!-- Add jQuery and DataTables JS in the scripts block -->
-<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<script src="
+https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/js/jquery.dataTables.min.js
+"></script>
 <script src="{{ url_for('static', filename='js/manage_users.js') }}"></script>
 
 {% endblock %}
