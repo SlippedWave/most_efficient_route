@@ -7,7 +7,6 @@ import logging
 from logging.handlers import RotatingFileHandler
 import os
 from dotenv import load_dotenv
-from flask_bootstrap import Bootstrap
 
 from app.extensions.auth import authorized
 from app.extensions.database import db, uri
@@ -31,7 +30,6 @@ app.config['DEBUG'] = True
 db.init_app(app)
 login_manager = LoginManager(app)
 app.jinja_env.globals['authorized'] = authorized
-Bootstrap(app)
 
 from app.models import *
 

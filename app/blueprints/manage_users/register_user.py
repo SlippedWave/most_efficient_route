@@ -4,6 +4,8 @@ from flask.views import MethodView
 from app.models import User, Status, Permit
 from app.blueprints.manage_users.register_user_form import RegisterUserForm
 from app.extensions.auth import require, has_permit_type
+from app.extensions.database import db
+
 
 class RegisterUserView(MethodView):
     @require(lambda: has_permit_type("Administrador"))
@@ -18,35 +20,31 @@ class RegisterUserView(MethodView):
             (permit.PMT_permitId, permit.PMT_type) for permit in Permit.query.all()
         ]
 
-        return render_template(
-            "manage_users/register_user.html",
-            title="Registrar nuevo usuario",
-            form=form,
-            status_choices=status_choices,
-            permit_choices=permit_choices,
-        )
-
+        return render_template("manage_users/set_user_info_form.html",
+                                form=form,
+                                url= url_for('manage_users.register_user'))
     def post(self):
         form = RegisterUserForm()
 
         if form.validate_on_submit():
-            existing_user = User.query.filter_by(USR_email=form.email.data).first()
+            existing_user = User.query.filter_by(USR_email=form.USR_email.data).first()
             if existing_user:
                 flash("¡El correo electrónico ya está registrado!", "error")
             else:
                 newUser = User(
-                    USR_email=form.email.data,
+                    USR_email=form.USR_email.data,
                     plain_password=form.plain_password.data,
-                    USR_name=form.name.data,
-                    USR_last_name=form.last_name.data,
-                    USR_telephone=form.telephone.data,
-                    USR_address=form.address.data,
-                    USR_PER_permitId=form.permit.data.PMT_permitId,  
-                    USR_ST_statusId=form.status.data.ST_statusId,  
+                    USR_name=form.USR_name.data,
+                    USR_last_name=form.USR_last_name.data,
+                    USR_telephone=form.USR_telephone.data,
+                    USR_address=form.USR_address.data,
+                    USR_PER_permitId=form.permit.data.PMT_permitId,
+                    USR_ST_statusId=form.status.data.ST_statusId,
                 )
-                newUser.save()
+                db.session.add(newUser)
+                db.session.commit()
                 flash("¡Usuario registrado exitosamente!", "success")
-                return redirect(url_for("manage_users.register_user"))
+                return redirect(url_for("manage_users.manage_users"))
 
         status_choices = [
             (status.ST_statusId, status.ST_value)
@@ -57,7 +55,7 @@ class RegisterUserView(MethodView):
         ]
 
         return render_template(
-            "manage_users/register_user.html",
+            "manage_users/set_user_info.html",
             title="Registrar nuevo usuario",
             form=form,
             status_choices=status_choices,

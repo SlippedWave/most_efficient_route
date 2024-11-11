@@ -1,7 +1,17 @@
 {% extends "base.html" %}
 
+{% block head %}
+{{ super() }}
+<!-- Add DataTables CSS in the head section -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+{% endblock %}
+
 {% block middle_column %}
 <h1>Administrar Usuarios</h1>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" id="add-user-btn">
+    Registrar nuevo usuario
+</button>
 
 <table id="manage_users_table" class="table table-striped">
     <thead>
@@ -29,7 +39,7 @@
             <td>{{ user.permit.PMT_type }}</td>
             <td>{{ user.USR_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             <td>
-                <a  class="btn btn-primary">Editar</a>
+                <button class="btn btn-primary edit-user-btn" data-id="{{ user.USR_userId }}">Editar</button>
             </td>
         </tr>
         {% else %}
@@ -41,11 +51,49 @@
 </table>
 {% endblock %}
 
+{% block modals %}
+<div id="editUserModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Editar usuario"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="editUserModalLabel">Editar usuario</h5>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addUserModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Agregar usuario"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="addUserModalLabel">Agregar usuario</h5>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
 {% block scripts %}
-<script>
-    $(document).ready( function () {
-        $('#manage_users_table').DataTable();
-    });
-</script>
+<!-- Add jQuery and DataTables JS in the scripts block -->
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<script src="{{ url_for('static', filename='js/manage_users.js') }}"></script>
 
 {% endblock %}
