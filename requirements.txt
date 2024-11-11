@@ -5,6 +5,7 @@ aiosignal==1.3.1
 alembic==1.14.0
 async-timeout==4.0.3
 attrs==24.2.0
+babel==2.16.0
 bcrypt==4.2.0
 blinker==1.8.2
 cachetools==5.5.0
@@ -15,9 +16,11 @@ click==8.1.7
 cloud-sql-python-connector==1.13.0
 colorama==0.4.6
 cryptography==43.0.3
+dnspython==2.7.0
 dominate==2.9.1
+email_validator==2.2.0
 Flask==3.0.3
-Flask-Bootstrap==3.3.7.1
+flask-babel==4.0.0
 Flask-DebugToolbar==0.16.0
 Flask-Login==0.6.3
 Flask-Migrate==4.0.7
@@ -38,6 +41,7 @@ pyasn1_modules==0.4.1
 pycparser==2.22
 PyMySQL==1.1.1
 python-dotenv==1.0.1
+pytz==2024.2
 requests==2.32.3
 rsa==4.9
 SQLAlchemy==2.0.36
@@ -46,4 +50,5 @@ urllib3==2.2.3
 visitor==0.1.3
 Werkzeug==3.0.4
 WTForms==3.2.1
+WTForms-SQLAlchemy==0.4.2
 yarl==1.17.1

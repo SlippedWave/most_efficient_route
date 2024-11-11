@@ -24,13 +24,13 @@ class LoginView(MethodView):
         if form.validate_on_submit():
             user = User.query.filter_by(USR_email=form.email.data).first()
             if user and user.check_password(form.password.data):
-                if user.is_active():        
-                
+                if user.is_active():       
                     login_user(user, remember=form.remember_me.data)
                     session.permanent = not form.remember_me.data
                     flash('¡Inicio de sesión exitoso!', 'success')
                     return redirect(request.args.get('next') or '/')
                 else:
+                    flash(user.status)
                     flash('¡Este usuario está deshabilitado', 'error')
             else:
                 flash('¡Contraseña o correo incorrecto!', 'error')
