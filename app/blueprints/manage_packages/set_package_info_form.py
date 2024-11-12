@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, HiddenField
-from wtforms.validators import DataRequired, Regexp
+from wtforms.validators import DataRequired, Regexp, Optional
 from wtforms_sqlalchemy.orm import QuerySelectField
 from app.models import Status
 
@@ -15,3 +15,4 @@ class SetPackageInfoForm(FlaskForm):
     )
     assigned_to_user = HiddenField('Selecciona al usuario', validators=[DataRequired()])
     address = HiddenField('Ingresa la dirección', validators=[DataRequired()])
+    PCK_special_delivery_instructions = StringField('Indicaciones especiales', validators=[Optional()])

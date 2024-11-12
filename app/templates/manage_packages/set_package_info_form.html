@@ -16,6 +16,13 @@
     </div>
 
     <div class="form-group">
+        <label for="PCK_client_phone_num" class="col-sm-2 control-label">Teléfono</label>
+        <div class="col-sm-10">
+            {{ form.PCK_client_phone_num(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="form-group">
         <label for="status" class="col-sm-2 control-label">Estado</label>
         <div class="col-sm-10">
             <select name="status" class="form-control">
@@ -29,7 +36,105 @@
         </div>
     </div>
 
-    
+    <!-- Modal para seleccionar usuarios -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" target="#select-user-modal">
+        Seleccionar usuario
+    </button>
+
+    <div id="select-user-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Seleccionar usuario"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="selectUserModalTitle">Seleccionar repartidor</h5>
+                </div>
+                <div class="modal-body">
+                    <table id="select_driver_table" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre de usuario</th>
+                                <th>Número de teléfono</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for driver in drivers %}
+                            <tr>
+                                <td>{{ driver.USR_userId }}</td>
+                                <td>{{ driver }}</td>
+                                <td>{{ driver.USR_telephone }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="3">No se encontraron drivers disponibles.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" target="#select-user-modal">
+        Seleccionar usuario
+    </button>
+
+    <div id="select-address-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Seleccionar dirección"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="selectAddressModalTitle">Seleccionar dirección</h5>
+                </div>
+                <div class="modal-body">
+                    <table id="select_address_table" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Calle</th>
+                                <th>Número Int / Ext</th>
+                                <th>Colonia</th>
+                                <th>Código postal</th>
+                                <th>Ciudad</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for address in adresses %}
+                            <tr>
+                                <td>{{ address.ADD_street }}</td>
+                                <td>{{ address.number }}</td>
+                                <td>{{ address.ADD_neighborhood }}</td>
+                                <td>{{ address.ADD_zip_code }}</td>
+                                <td>{{ address.ADD_city }}</td>
+                                <td>{{ address.ADD_state }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="8">
+                                    No se encontraron direcciones que coincidan con el criterio.
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" target="#add-address-modal">
+                                        Agregar nueva dirección
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- I need to create a form for add-address-modal so I can use a different 
+     addresses from the others I have in my db. How should I do -->
 
 
     {{ form.assigned_to_user() }}

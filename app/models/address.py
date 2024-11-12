@@ -11,11 +11,10 @@ class Address(db.Model):
     ADD_zip_code = db.Column(db.String(5), nullable=False)
     ADD_city = db.Column(db.String(50), nullable=False)
     ADD_state = db.Column(db.String(50), nullable=False)
-    ADD_special_instructions = db.Column(db.String(200), nullable=True)
     
     def __init__(
         self, ADD_street, ADD_ext_number, ADD_neighborhood, ADD_zip_code,
-        ADD_city, ADD_state, ADD_special_instructions=None, ADD_int_number=None
+        ADD_city, ADD_state, ADD_int_number=None
     ):
         self.ADD_street = ADD_street
         self.ADD_ext_number = ADD_ext_number
@@ -24,7 +23,6 @@ class Address(db.Model):
         self.ADD_zip_code = ADD_zip_code
         self.ADD_city = ADD_city
         self.ADD_state = ADD_state
-        self.ADD_special_instructions = ADD_special_instructions
 
     def __repr__(self):
         return (f"{self.ADD_street}, No. {self.ADD_ext_number},"
