@@ -3,7 +3,7 @@ from app.extensions.database import db
 class Address(db.Model):
     __tablename__ = "addresses"
 
-    ADD_addressId = db.Column(db.Integer, primary_key=True)  # Unique address ID
+    ADD_addressId = db.Column(db.Integer, primary_key=True) 
     ADD_street = db.Column(db.String(200), nullable=False)
     ADD_ext_number = db.Column(db.String(10), nullable=False)
     ADD_int_number = db.Column(db.String(10), nullable=True)
