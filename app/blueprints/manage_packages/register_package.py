@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for
 from flask.views import MethodView
 
 from app.models import User, Status, Permit
-from app.blueprints.manage_users.register_user_form import RegisterUserForm
+from app.blueprints.manage_users.set_user_info_form import SetUserInfoForm
 from app.extensions.auth import require, has_permit_type
 from app.extensions.database import db
 
@@ -10,21 +10,15 @@ from app.extensions.database import db
 class RegisterUserView(MethodView):
     @require(lambda: has_permit_type("Administrador"))
     def get(self):
-        form = RegisterUserForm()
+        form = SetUserInfoForm()
+        return render_template(
+            "manage_users/set_user_info_form.html",
+            form=form,
+            url=url_for("manage_users.register_package"),
+        )
 
-        status_choices = [
-            (status.ST_statusId, status.ST_value)
-            for status in Status.query.filter_by(ST_status_type=1).all()
-        ]
-        permit_choices = [
-            (permit.PMT_permitId, permit.PMT_type) for permit in Permit.query.all()
-        ]
-
-        return render_template("manage_users/set_user_info_form.html",
-                                form=form,
-                                url= url_for('manage_users.register_user'))
     def post(self):
-        form = RegisterUserForm()
+        form = SetUserInfoForm()
 
         if form.validate_on_submit():
             existing_user = User.query.filter_by(USR_email=form.USR_email.data).first()

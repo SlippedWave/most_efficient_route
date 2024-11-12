@@ -19,7 +19,11 @@ class User(db.Model):
 
     permit = db.relationship("Permit", backref="users") 
     status = db.relationship("Status", backref="users") 
-    modified_by = db.relationship("User", backref="users")
+    modified_by = db.relationship(
+        "User",
+        remote_side=[USR_userId],
+        backref="modified_users"
+    )
 
     def __init__(self, USR_email, plain_password, USR_name, USR_last_name, USR_modified_by, USR_telephone=None, USR_address=None, USR_PER_permitId=None, USR_ST_statusId=None):
         self.USR_email = USR_email
@@ -56,4 +60,4 @@ class User(db.Model):
         db.session.commit()    
     
     def __repr__(self):
-        return f"{self.USR_last_name}, Usuario {self.USR_name}"
+        return f"{self.USR_last_name}, {self.USR_name}"

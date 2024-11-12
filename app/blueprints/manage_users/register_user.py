@@ -3,7 +3,7 @@ from flask.views import MethodView
 from flask_login import current_user
 
 from app.models import User, Status, Permit
-from app.blueprints.manage_users.register_user_form import RegisterUserForm
+from app.blueprints.manage_users.set_user_info_form import SetUserInfoForm
 from app.extensions.auth import require, has_permit_type
 from app.extensions.database import db
 
@@ -11,21 +11,15 @@ from app.extensions.database import db
 class RegisterUserView(MethodView):
     @require(lambda: has_permit_type("Administrador"))
     def get(self):
-        form = RegisterUserForm()
+        form = SetUserInfoForm()
+        return render_template(
+            "manage_users/set_user_info_form.html",
+            form=form,
+            url=url_for("manage_users.register_user"),
+        )
 
-        status_choices = [
-            (status.ST_statusId, status.ST_value)
-            for status in Status.query.filter_by(ST_status_type=1).all()
-        ]
-        permit_choices = [
-            (permit.PMT_permitId, permit.PMT_type) for permit in Permit.query.all()
-        ]
-
-        return render_template("manage_users/set_user_info_form.html",
-                                form=form,
-                                url= url_for('manage_users.register_user'))
     def post(self):
-        form = RegisterUserForm()
+        form = SetUserInfoForm()
 
         if form.validate_on_submit():
             existing_user = User.query.filter_by(USR_email=form.USR_email.data).first()
@@ -41,25 +35,15 @@ class RegisterUserView(MethodView):
                     USR_address=form.USR_address.data,
                     USR_PER_permitId=form.permit.data.PMT_permitId,
                     USR_ST_statusId=form.status.data.ST_statusId,
-                    USR_modified_by = current_user.USR_userId
+                    USR_modified_by=current_user.USR_userId,
                 )
                 db.session.add(newUser)
                 db.session.commit()
                 flash("¡Usuario registrado exitosamente!", "success")
                 return redirect(url_for("manage_users.manage_users"))
 
-        status_choices = [
-            (status.ST_statusId, status.ST_value)
-            for status in Status.query.filter_by(ST_status_type=1).all()
-        ]
-        permit_choices = [
-            (permit.PMT_permitId, permit.PMT_type) for permit in Permit.query.all()
-        ]
-
         return render_template(
             "manage_users/set_user_info.html",
             title="Registrar nuevo usuario",
             form=form,
-            status_choices=status_choices,
-            permit_choices=permit_choices,
         )

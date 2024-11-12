@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template
 from flask.views import MethodView
 from sqlalchemy.orm import load_only, joinedload
 from app.models import User, Permit, Status
@@ -17,10 +17,10 @@ class ManageUsersView(MethodView):
                 User.USR_last_modified,
             ),
             joinedload(User.permit).load_only(
-                Permit.PMT_type  # Use class-bound attribute, not string
+                Permit.PMT_type 
             ), 
             joinedload(User.status).load_only(
-                Status.ST_value  # Use class-bound attribute, not string
+                Status.ST_value 
             ), 
         ).all()
         return render_template("manage_users/manage_users.html", users=users)

@@ -1,10 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
 from wtforms.validators import DataRequired, Email, Regexp
+
 from wtforms_sqlalchemy.orm import QuerySelectField
 from app.models import Status, Permit
 
-class RegisterPackageForm(FlaskForm):
+class SetUserInfoForm(FlaskForm):
     USR_email = StringField('Correo electrónico', validators=[DataRequired(), Email()])
     USR_telephone = StringField('Teléfono', validators=[DataRequired(), Regexp('^\d{10}$')])
     plain_password = PasswordField('Contraseña', validators=[DataRequired(), Regexp('^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.{8,})')])

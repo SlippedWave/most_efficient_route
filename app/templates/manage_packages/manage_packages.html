@@ -2,7 +2,6 @@
 
 {% block head %}
 {{ super() }}
-<!-- Add DataTables CSS in the head section -->
 <link href="
 https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/css/jquery.dataTables.min.css
 " rel="stylesheet">
@@ -33,15 +32,16 @@ https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/css/jquery.dataTables.min.
         {% for package in packages %}
         <tr>
             <td>{{ package.PCK_packageId }}</td>
-            <td>{{ package.address.__repr__ }}</td>
+            <td>{{ package.address }}</td>
             <td>{{ package.PCK_client_name }}</td>
             <td>{{ package.PCK_client_phone_num }}</td>
-            <td>{{ package.PCK_ST_statusId }}</td>
-            <td>{{ package.assigned_to_user.__repr__ }}</td>
+            <td>{{ package.status.ST_value }}</td>
+            <td>{{ package.assigned_to_user }}</td>
             <td>{{ package.PCK_delivery_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             <td>{{ package.PCK_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             <td>
-                <button class="btn btn-primary edit-package-btn" data-id="{{ package.PCK_packageId }}">PCK_packageId</button>
+                <button class="btn btn-primary edit-package-btn" data-id="{{ package.PCK_packageId }} " {% if
+                    package.status.ST_value=='3' %}disabled{% endif %}>Modificar</button>
             </td>
         </tr>
         {% else %}
@@ -110,7 +110,6 @@ https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/css/jquery.dataTables.min.
 
 
 {% block scripts %}
-<!-- Add jQuery and DataTables JS in the scripts block -->
 <script src="
 https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/js/jquery.dataTables.min.js
 "></script>
