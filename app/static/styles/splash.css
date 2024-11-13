@@ -22,7 +22,7 @@ body, html {
 .logo {
     width: 20vw; /* Un ancho relativo que se ajuste proporcionalmente al ancho de la ventana */
     max-width: 300px; /* Tamaño máximo para evitar que crezca demasiado en pantallas grandes */
-    animation: fadeIn 2s ease-in-out;
+    animation: fadeIn 1s ease-in-out;
 }
 
 .project-name {
@@ -30,7 +30,7 @@ body, html {
     font-size: max(2.5em); /* Tamaño máximo del texto */
     color: white;
     margin-top: 20px;
-    animation: fadeIn 3s ease-in-out;
+    animation: fadeIn 1s ease-in-out;
 }
 
 .progress-bar {
@@ -47,7 +47,7 @@ body, html {
     width: 0%;
     height: 100%;
     background-color: #f05328;
-    animation: loadProgress 5s linear forwards;
+    animation: loadProgress 2s linear forwards;
     border-radius: 4px;
 }
 
