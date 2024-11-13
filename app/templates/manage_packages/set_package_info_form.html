@@ -2,16 +2,9 @@
     {{ form.hidden_tag() }}
 
     <div class="form-group">
-        <label for="PCK_client_name" class="col-sm-10 control-label">Correo Electrónico</label>
+        <label for="PCK_client_name" class="col-sm-10 control-label">Nombre del cliente</label>
         <div class="col-sm-10">
             {{ form.PCK_client_name(class="form-control") }}
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="PCK_client_phone_num" class="col-sm-2 control-label">Teléfono</label>
-        <div class="col-sm-10">
-            {{ form.PCK_client_phone_num(class="form-control") }}
         </div>
     </div>
 
@@ -37,7 +30,7 @@
     </div>
 
     <!-- Modal para seleccionar usuarios -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" target="#select-user-modal">
+    <button type="button" class="btn btn-primary" data-toggle="modal" target="#selectUserModal">
         Seleccionar usuario
     </button>
 
@@ -67,10 +60,6 @@
                                 <td>{{ driver }}</td>
                                 <td>{{ driver.USR_telephone }}</td>
                             </tr>
-                            {% else %}
-                            <tr>
-                                <td colspan="3">No se encontraron drivers disponibles.</td>
-                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -79,7 +68,7 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" target="#select-user-modal">
+    <button type="button" class="btn btn-primary" data-toggle="modal" target="#selectAddressModal">
         Seleccionar usuario
     </button>
 
@@ -106,27 +95,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for address in adresses %}
+                            {% for address in addresses %}
                             <tr>
                                 <td>{{ address.ADD_street }}</td>
-                                <td>{{ address.number }}</td>
+                                <td>
+                                    Ext: {{ address.ADD_ext_number }}
+                                    {% if address.ADD_int_number %}, Int: {{ address.ADD_int_number }}{% endif %}
+                                </td>
                                 <td>{{ address.ADD_neighborhood }}</td>
                                 <td>{{ address.ADD_zip_code }}</td>
                                 <td>{{ address.ADD_city }}</td>
                                 <td>{{ address.ADD_state }}</td>
                             </tr>
-                            {% else %}
-                            <tr>
-                                <td colspan="8">
-                                    No se encontraron direcciones que coincidan con el criterio.
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        target="#add-address-modal">
-                                        Agregar nueva dirección
-                                    </button>
-                                </td>
-                            </tr>
                             {% endfor %}
                         </tbody>
+
                     </table>
                 </div>
             </div>
@@ -143,7 +126,7 @@
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">Actualizar Paquete</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
     </div>
 </form>

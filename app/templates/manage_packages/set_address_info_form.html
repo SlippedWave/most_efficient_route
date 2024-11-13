@@ -1,0 +1,58 @@
+<form method="POST" action="{{ url }}" id="set_address_info" class="form-horizontal">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        <label for="email" class="col-sm-10 control-label">Calle</label>
+        <div class="col-sm-10">
+            {{ form.ADD_street(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="telephone" class="col-sm-2 control-label">Número exterior</label>
+        <div class="col-sm-10">
+            {{ form.ADD_ext_number(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="name" class="col-sm-2 control-label">Número interior</label>
+        <div class="col-sm-10">
+            {{ form.ADD_int_number(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="address" class="col-sm-2 control-label">Dirección</label>
+        <div class="col-sm-10">
+            {{ form.ADD_neighborhood(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="status" class="col-sm-2 control-label">Código postal</label>
+        <div class="col-sm-10">
+            {{ form.ADD_zip_code(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="permit" class="col-sm-2 control-label">Ciudad</label>
+        <div class="col-sm-10">
+            {{ form.ADD_city(class="form-control") }}
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="plain_password" class="col-sm-2 control-label">Estado</label>
+        <div class="col-sm-10">
+            {{ form.ADD_state(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+    </div>
+</form>

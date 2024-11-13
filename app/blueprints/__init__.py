@@ -2,7 +2,7 @@ ENABLED_VIEWS = [
     'app.blueprints.auth',
     'app.blueprints.manage_users',
     'app.blueprints.home',
-    # 'app.blueprints.manage_packages',
+    'app.blueprints.manage_packages',
 ]
 
 def register_blueprints(app):

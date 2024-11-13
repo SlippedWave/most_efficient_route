@@ -2,15 +2,13 @@
 
 {% block head %}
 {{ super() }}
-<link href="
-https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/css/jquery.dataTables.min.css
-" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block middle_column %}
 <h1>Administrar paquetes</h1>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" id="add-package-btn">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" id="add-package-btn">
     Registrar nuevo paquete
 </button>
 
@@ -40,13 +38,10 @@ https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/css/jquery.dataTables.min.
             <td>{{ package.PCK_delivery_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             <td>{{ package.PCK_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             <td>
-                <button class="btn btn-primary edit-package-btn" data-id="{{ package.PCK_packageId }} " {% if
-                    package.status.ST_value=='3' %}disabled{% endif %}>Modificar</button>
+                <button class="btn btn-primary edit-package-btn" data-id="{{ package.PCK_packageId }}" {% if
+                    package.status.ST_value=='3' %}disabled{% endif %}>Modificar
+                </button>
             </td>
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan="9">No se encontraron registros.</td>
         </tr>
         {% endfor %}
     </tbody>
@@ -59,13 +54,12 @@ https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/css/jquery.dataTables.min.
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal"="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h5 class="modal-title" id="editPackageModalLabel">Editar paquete</h5>
             </div>
             <div class="modal-body">
-
             </div>
         </div>
     </div>
@@ -76,13 +70,12 @@ https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/css/jquery.dataTables.min.
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal"="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h5 class="modal-title" id="addPackageModal">Agregar paquete</h5>
+                <h5 class="modal-title" id="addPackageModalLabel">Agregar paquete</h5>
             </div>
             <div class="modal-body">
-                
             </div>
         </div>
     </div>
@@ -93,25 +86,19 @@ https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/css/jquery.dataTables.min.
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal"="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h5 class="modal-title" id="addAddressModal">Agregar dirección</h5>
+                <h5 class="modal-title" id="addAddressModalLabel">Agregar dirección</h5>
             </div>
             <div class="modal-body">
-
             </div>
         </div>
     </div>
 </div>
 {% endblock %}
 
-
-
 {% block scripts %}
-<script src="
-https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/js/jquery.dataTables.min.js
-"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script src="{{ url_for('static', filename='js/manage_packages.js') }}"></script>
-
 {% endblock %}

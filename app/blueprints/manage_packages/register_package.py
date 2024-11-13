@@ -1,57 +1,62 @@
 from flask import render_template, flash, redirect, url_for
 from flask.views import MethodView
+from flask_login import current_user
 
-from app.models import User, Status, Permit
-from app.blueprints.manage_users.set_user_info_form import SetUserInfoForm
+from app.models import Package, User, Address
+from app.blueprints.manage_packages.set_package_info_form import SetPackageInfoForm
 from app.extensions.auth import require, has_permit_type
 from app.extensions.database import db
 
 
-class RegisterUserView(MethodView):
+class RegisterPackageView(MethodView):
     @require(lambda: has_permit_type("Administrador"))
     def get(self):
-        form = SetUserInfoForm()
+        form = SetPackageInfoForm()
+
+        drivers = (
+            User.query.with_entities(User.USR_userId, User.USR_telephone)
+            .filter_by(USR_PER_permitId=3)
+            .all()
+        )
+        addresses = Address.query.with_entities(
+            Address.ADD_street,
+            Address.ADD_ext_number,
+            Address.ADD_int_number,
+            Address.ADD_neighborhood,
+            Address.ADD_zip_code,
+            Address.ADD_city,
+            Address.ADD_state,
+        ).all()
+
         return render_template(
-            "manage_users/set_user_info_form.html",
+            "manage_packages/set_package_info_form.html",
             form=form,
-            url=url_for("manage_users.register_package"),
+            drivers=drivers,
+            addresses=addresses,
+            url=url_for("manage_packages.register_package"),
         )
 
     def post(self):
-        form = SetUserInfoForm()
+        form = SetPackageInfoForm()
 
         if form.validate_on_submit():
-            existing_user = User.query.filter_by(USR_email=form.USR_email.data).first()
-            if existing_user:
-                flash("¡El correo electrónico ya está registrado!", "error")
-            else:
-                newUser = User(
-                    USR_email=form.USR_email.data,
-                    plain_password=form.plain_password.data,
-                    USR_name=form.USR_name.data,
-                    USR_last_name=form.USR_last_name.data,
-                    USR_telephone=form.USR_telephone.data,
-                    USR_address=form.USR_address.data,
-                    USR_PER_permitId=form.permit.data.PMT_permitId,
-                    USR_ST_statusId=form.status.data.ST_statusId,
-                )
-                db.session.add(newUser)
-                db.session.commit()
-                flash("¡Usuario registrado exitosamente!", "success")
-                return redirect(url_for("manage_users.manage_users"))
+            newPackage = Package(
+                PCK_USR_modified_by=current_user.USR_Id,
+                PCK_client_name=form.PCK_client_name.data,
+                PCK_client_phone_num=form.PCK_client_phone_num.data,
+                PCK_ST_statusId=form.status.data.ST_statusId,
+                PCK_special_delivery_instructions=form.PCK_special_delivery_instructions,
+                PCK_USR_assigned_to=form.assigned_to_user.Id,
+                PCK_ADD_addressId=form.address.Id,
+            )
+            db.session.add(newPackage)
+            db.session.commit()
+            flash("¡Usuario registrado exitosamente!", "success")
+            return redirect(url_for("manage_users.manage_users"))
 
-        status_choices = [
-            (status.ST_statusId, status.ST_value)
-            for status in Status.query.filter_by(ST_status_type=1).all()
-        ]
-        permit_choices = [
-            (permit.PMT_permitId, permit.PMT_type) for permit in Permit.query.all()
-        ]
-
+        flash("¡Se encontraron problemas en el registro!", "error")
         return render_template(
-            "manage_users/set_user_info.html",
-            title="Registrar nuevo usuario",
+            "manage_packages/set_package_info_form.html",
             form=form,
-            status_choices=status_choices,
-            permit_choices=permit_choices,
+            url=url_for("manage_packages.register_package"),
         )

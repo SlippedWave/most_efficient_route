@@ -2,7 +2,7 @@ from flask import render_template, jsonify, request, redirect, url_for, flash
 from flask.views import MethodView
 from flask_login import current_user
 
-from app.models import User, Status, Package
+from app.models import Package
 from app.blueprints.manage_packages.set_package_info_form import SetPackageInfoForm
 from app.extensions.database import db
 
@@ -20,24 +20,28 @@ class EditPackageView(MethodView):
         )
 
     def post(self, id):
-        user = User.query.get_or_404(id)
+        package = Package.query.get_or_404(id)
 
-        form = SetPackageInfoForm(request.form, obj=user)
+        form = SetPackageInfoForm(request.form, obj=package)
 
         if form.validate_on_submit():
-            user.USR_email = form.USR_email.data
-            user.USR_name = form.USR_name.data
-            user.USR_last_name = form.USR_last_name.data
-            user.USR_telephone = form.USR_telephone.data
-            user.USR_address = form.USR_address.data
 
-            user.USR_PER_permitId = form.permit.data.PMT_permitId
-            user.USR_ST_statusId = form.status.data.ST_statusId
+            package.PCK_USR_modified_by = (current_user.USR_Id,)
+            package.PCK_client_name = (form.PCK_client_name.data,)
+            package.PCK_client_phone_num = (form.PCK_client_phone_num.data,)
+            package.PCK_ST_statusId = (form.status.data.ST_statusId,)
+            package.PCK_special_delivery_instructions = (
+                form.PCK_special_delivery_instructions,
+            )
 
-            plain_password = form.plain_password.data
+            assigned_to_user = form.assigned_to_user.Id
+            address = form.address.Id
 
-            if plain_password:
-                user.set_password(plain_password)
+            if assigned_to_user:
+                package.PCK_USR_assigned_to = assigned_to_user
+
+            if address:
+                package.PCK_ADD_addressId = address
 
             try:
                 db.session.commit()

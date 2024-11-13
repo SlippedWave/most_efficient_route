@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for
 from flask.views import MethodView
 from flask_login import current_user
 
-from app.models import User, Status, Permit
+from app.models import User
 from app.blueprints.manage_users.set_user_info_form import SetUserInfoForm
 from app.extensions.auth import require, has_permit_type
 from app.extensions.database import db
@@ -43,7 +43,7 @@ class RegisterUserView(MethodView):
                 return redirect(url_for("manage_users.manage_users"))
 
         return render_template(
-            "manage_users/set_user_info.html",
+            "manage_users/set_user_info_form.html",
             title="Registrar nuevo usuario",
             form=form,
         )
