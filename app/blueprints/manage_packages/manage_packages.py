@@ -16,6 +16,7 @@ class ManagePackagesView(MethodView):
             .all()
         )
         addresses = Address.query.with_entities(
+            Address.ADD_addressId,
             Address.ADD_street,
             Address.ADD_ext_number,
             Address.ADD_int_number,

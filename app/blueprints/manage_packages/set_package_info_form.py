@@ -13,6 +13,6 @@ class SetPackageInfoForm(FlaskForm):
         get_label='ST_value', 
         validators=[DataRequired()]
     )
-    assigned_to_user = HiddenField('Selecciona al usuario', validators=[DataRequired()])
-    address = HiddenField('Ingresa la dirección', validators=[DataRequired()])
+    PCK_USR_assigned_to = HiddenField('Selecciona al usuario', validators=[DataRequired()])
+    PCK_ADD_addressId = HiddenField('Ingresa la dirección', validators=[DataRequired()])
     PCK_special_delivery_instructions = StringField('Indicaciones especiales', validators=[Optional()])

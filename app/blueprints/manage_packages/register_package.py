@@ -24,13 +24,13 @@ class RegisterPackageView(MethodView):
 
         if form.validate_on_submit():
             newPackage = Package(
-                PCK_USR_modified_by=current_user.USR_Id,
+                PCK_USR_modified_by=current_user.USR_userId,
                 PCK_client_name=form.PCK_client_name.data,
                 PCK_client_phone_num=form.PCK_client_phone_num.data,
                 PCK_ST_statusId=form.status.data.ST_statusId,
-                PCK_special_delivery_instructions=form.PCK_special_delivery_instructions,
-                PCK_USR_assigned_to=form.assigned_to_user.Id,
-                PCK_ADD_addressId=form.address.Id,
+                PCK_special_delivery_instructions=form.PCK_special_delivery_instructions.data,
+                PCK_USR_assigned_to=form.PCK_USR_assigned_to.data,
+                PCK_ADD_addressId=form.PCK_ADD_addressId.data,
             )
             db.session.add(newPackage)
             db.session.commit()

@@ -20,6 +20,12 @@ $(document).ready(function () {
         select: {
             style: 'single'
         },
+        columnDefs: [
+            {
+                target: 0,
+                visible: false,
+            },
+        ],
         drawCallback: function (settings) {
             let api = this.api();
             if (api.rows({ filter: 'applied' }).data().length === 0) {
@@ -42,22 +48,22 @@ $(document).ready(function () {
     userTable.on('select', function (e, dt, type, indexes) {
         if (type === 'row') {
             var data = userTable
-                .rows(indexes)   
-                .data()          
-                .pluck(0)[0]; 
+                .rows(indexes)
+                .data()
+                .pluck(0)[0];
 
-            $('input[name="assigned_to_user"]').val(data);
+            $('input[name="PCK_USR_assigned_to"]').val(data);
         }
     });
 
     addressTable.on('select', function (e, dt, type, indexes) {
         if (type === 'row') {
-            var data = userTable
-                .rows(indexes)  
-                .data()           
-                .pluck(0)[0]; 
+            var data = addressTable
+                .rows(indexes)
+                .data()
+                .pluck(0)[0];
 
-            $('input[name="address"]').val(data);
+            $('input[name="PCK_ADD_addressId"]').val(data);
         }
     });
 
@@ -68,7 +74,7 @@ $(document).ready(function () {
     var addAddressModal = new bootstrap.Modal(document.getElementById('addAddressModal'));
 
     $('button#add-package-btn').on('click', function () {
-        let modalBody = $('#addPackageModal').find('.modal-body');
+        let modalBody = $('#addPackageModal').find('.modal-dynamic');
         modalBody.html('');
 
         $.ajax({
@@ -76,8 +82,8 @@ $(document).ready(function () {
             type: 'GET',
             dataType: 'html',
             success: function (response) {
-                modalBody.html(response);  
-                addPackageModal.show();    
+                modalBody.html(response);
+                addPackageModal.show();
             },
             error: function () {
                 alert('Error al cargar el formulario de registro');
@@ -88,16 +94,16 @@ $(document).ready(function () {
     $('body').on('click', '.edit-package-btn', function () {
         let packageId = $(this).data('id');
 
-        let modalBody = $('#editPackageModal').find('.modal-body');
-        modalBody.html(''); 
+        let modalBody = $('#editPackageModal').find('.modal-dynamic');
+        modalBody.html('');
 
         $.ajax({
             url: '/editar_paquete/' + packageId,
             type: 'GET',
             dataType: 'html',
             success: function (response) {
-                modalBody.html(response);  
-                editPackageModal.show();  
+                modalBody.html(response);
+                editPackageModal.show();
             },
             error: function () {
                 alert('Error al cargar el formulario de edición');
@@ -105,14 +111,41 @@ $(document).ready(function () {
         });
     });
 
-
     $('body').on('click', '#select-driver-btn', function () {
+        var assigned_to_user = $('input[name="PCK_USR_assigned_to"]').val();
+
+        if (assigned_to_user) {
+            var columnData = userTable.column(0).data();
+
+            var rowIndex = columnData.indexOf(assigned_to_user);
+
+            if (rowIndex !== -1) {
+                userTable.row(rowIndex).select();
+            }
+        }
+
         selectUserModal.show();
     });
 
+
     $('body').on('click', '#select-address-btn', function () {
-        selectAddressModal.show();
+        var selectedAddressId = $('input[name="PCK_ADD_addressId"]').val();  // Get the selected address ID
+
+        if (selectedAddressId) {
+            var columnData = addressTable.column(0).data();
+
+            var rowIndex = columnData.indexOf(selectedAddressId);
+
+            if (rowIndex !== -1) {
+                addressTable.row(rowIndex).select();  // Select the row by its index
+            }
+        }
+
+        selectAddressModal.show();  // Show the modal
     });
+
+
+
 
     // Handle form submission for both add and edit package form via AJAX
     $('body').on('submit', '#set_package_info', function (event) {
@@ -125,7 +158,6 @@ $(document).ready(function () {
         let modalToClose = addPackageModal;
 
         if ($('#editPackageModal').hasClass('show')) {
-            actionUrl = '/registrar_paquete';
             modalToClose = editPackageModal;
         }
 
@@ -136,12 +168,12 @@ $(document).ready(function () {
             success: function (response) {
                 alert('Paquete guardado exitosamente');
                 modalToClose.hide();
-                packagesTable.ajax.reload();
             },
             error: function () {
                 alert('Error al guardar el paquete');
             }
         });
+
     });
 
     $('#closeAddAddressModal').on('click', function () {

@@ -35,7 +35,13 @@
             <td>{{ package.PCK_client_phone_num }}</td>
             <td>{{ package.status.ST_value }}</td>
             <td>{{ package.assigned_to_user }}</td>
-            <td>{{ package.PCK_delivery_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td>
+                {% if package.PCK_delivery_date %}
+                    {{ package.PCK_delivery_date.strftime('%Y-%m-%d %H:%M:%S') }}
+                {% else %}
+                    N / A
+                {% endif %}
+            </td>
             <td>{{ package.PCK_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             <td>
                 <button class="btn btn-primary edit-package-btn" data-id="{{ package.PCK_packageId }}" {% if
@@ -58,7 +64,7 @@
                 <h5 class="modal-title" id="addPackageModalLabel">Agregar paquete</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-dynamic">
                 <!-- Content will be loaded dynamically -->
             </div>
         </div>
@@ -126,6 +132,7 @@
                 <table id="select_address_table" class="table table-striped">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Calle</th>
                             <th>Número Int / Ext</th>
                             <th>Colonia</th>
@@ -137,6 +144,7 @@
                     <tbody>
                         {% for address in addresses %}
                         <tr>
+                            <td>{{ address.ADD_addressId }}</td>
                             <td>{{ address.ADD_street }}</td>
                             <td>
                                 Ext: {{ address.ADD_ext_number }}

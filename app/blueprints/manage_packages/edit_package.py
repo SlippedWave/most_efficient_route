@@ -26,16 +26,16 @@ class EditPackageView(MethodView):
 
         if form.validate_on_submit():
 
-            package.PCK_USR_modified_by = (current_user.USR_Id,)
-            package.PCK_client_name = (form.PCK_client_name.data,)
-            package.PCK_client_phone_num = (form.PCK_client_phone_num.data,)
-            package.PCK_ST_statusId = (form.status.data.ST_statusId,)
+            package.PCK_USR_modified_by = current_user.USR_userId
+            package.PCK_client_name = form.PCK_client_name.data
+            package.PCK_client_phone_num = form.PCK_client_phone_num.data
+            package.PCK_ST_statusId = form.status.data.ST_statusId
             package.PCK_special_delivery_instructions = (
-                form.PCK_special_delivery_instructions,
+                form.PCK_special_delivery_instructions.data
             )
 
-            assigned_to_user = form.assigned_to_user.Id
-            address = form.address.Id
+            assigned_to_user = form.PCK_USR_assigned_to.data
+            address = form.PCK_ADD_addressId.data
 
             if assigned_to_user:
                 package.PCK_USR_assigned_to = assigned_to_user
