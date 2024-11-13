@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for
 from flask.views import MethodView
 from flask_login import current_user
 
-from app.models import Package, User, Address
+from app.models import Package
 from app.blueprints.manage_packages.set_package_info_form import SetPackageInfoForm
 from app.extensions.auth import require, has_permit_type
 from app.extensions.database import db
@@ -13,26 +13,9 @@ class RegisterPackageView(MethodView):
     def get(self):
         form = SetPackageInfoForm()
 
-        drivers = (
-            User.query.with_entities(User.USR_userId, User.USR_telephone)
-            .filter_by(USR_PER_permitId=3)
-            .all()
-        )
-        addresses = Address.query.with_entities(
-            Address.ADD_street,
-            Address.ADD_ext_number,
-            Address.ADD_int_number,
-            Address.ADD_neighborhood,
-            Address.ADD_zip_code,
-            Address.ADD_city,
-            Address.ADD_state,
-        ).all()
-
         return render_template(
             "manage_packages/set_package_info_form.html",
             form=form,
-            drivers=drivers,
-            addresses=addresses,
             url=url_for("manage_packages.register_package"),
         )
 

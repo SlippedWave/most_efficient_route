@@ -2,13 +2,13 @@
 
 {% block head %}
 {{ super() }}
-<link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block middle_column %}
 <h1>Administrar paquetes</h1>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" id="add-package-btn">
+<button type="button" class="btn btn-primary" id="add-package-btn">
     Registrar nuevo paquete
 </button>
 
@@ -49,56 +49,135 @@
 {% endblock %}
 
 {% block modals %}
-<div id="editPackageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Editar paquete"
+<!-- Add Package Modal -->
+<div id="addPackageModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="Agregar paquete"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-bs-dismiss="modal"="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 class="modal-title" id="editPackageModalLabel">Editar paquete</h5>
-            </div>
-            <div class="modal-body">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="addPackageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Agregar paquete"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-bs-dismiss="modal"="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
                 <h5 class="modal-title" id="addPackageModalLabel">Agregar paquete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <!-- Content will be loaded dynamically -->
             </div>
         </div>
     </div>
 </div>
 
-<div id="addAddressModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Agregar dirección"
+<!-- Edit Package Modal -->
+<div id="editPackageModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="Editar paquete"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-bs-dismiss="modal"="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 class="modal-title" id="addAddressModalLabel">Agregar dirección</h5>
+                <h5 class="modal-title" id="editPackageModalLabel">Editar paquete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-dynamic">
+                <!-- Content will be loaded dynamically -->
             </div>
         </div>
     </div>
 </div>
+
+<div id="selectUserModal" class="modal" tabindex="-1" aria-labelledby="Seleccionar usuario" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectUserModalTitle">Seleccionar repartidor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table id="select_driver_table" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre de usuario</th>
+                            <th>Número de teléfono</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for driver in drivers %}
+                        <tr>
+                            <td>{{ driver.USR_userId }}</td>
+                            <td>{{ driver.USR_last_name }}, {{ driver.USR_name }}</td>
+                            <td>{{ driver.USR_telephone }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="closeSelectUserModalFooter">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="selectAddressModal" class="modal" tabindex="-1" aria-labelledby="Seleccionar dirección" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectAddressModalTitle">Seleccionar dirección</h5>
+                <button type="button" class="btn-close" id="closeSelectAddressModal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table id="select_address_table" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Calle</th>
+                            <th>Número Int / Ext</th>
+                            <th>Colonia</th>
+                            <th>Código postal</th>
+                            <th>Ciudad</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for address in addresses %}
+                        <tr>
+                            <td>{{ address.ADD_street }}</td>
+                            <td>
+                                Ext: {{ address.ADD_ext_number }}
+                                {% if address.ADD_int_number %}, Int: {{ address.ADD_int_number }}{% endif %}
+                            </td>
+                            <td>{{ address.ADD_neighborhood }}</td>
+                            <td>{{ address.ADD_zip_code }}</td>
+                            <td>{{ address.ADD_city }}</td>
+                            <td>{{ address.ADD_state }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="closeSelectAddressModalFooter">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Address Modal -->
+<div id="addAddressModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="Agregar dirección"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addAddressModalLabel">Agregar dirección</h5>
+                <button type="button" class="btn-close" id="closeAddAddressModal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block scripts %}
-<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/2.1.0/js/dataTables.select.min.js"></script>
 <script src="{{ url_for('static', filename='js/manage_packages.js') }}"></script>
 {% endblock %}
