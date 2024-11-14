@@ -11,6 +11,16 @@ body {
 	margin: 0;
 }
 
+.alert {
+	position: fixed;
+	z-index: 100;
+    bottom: 20px;  /* Espacio desde la parte inferior de la pantalla */
+    left: 50%;  /* Centra la alerta horizontalmente */
+    transform: translateX(-50%);  /* Ajusta la posición horizontal al centro */
+    max-width: 90%;  /* Evita que sea demasiado ancha */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
 .hero-unit {
     max-width: 600px;
     margin: 20vh auto; /* Ajustar el margen superior para una mejor visibilidad */

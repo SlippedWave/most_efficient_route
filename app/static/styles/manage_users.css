@@ -1,0 +1,207 @@
+html{
+	font-family: "Roboto", sans-serif;
+}
+
+h1{
+	text-align: left;
+	margin: 1em 0.5em;
+	color: #f05328;
+	font-size: 2em;
+}
+
+/* Estilo para la tabla de administración de usuarios */
+#manage_users_table {
+    width: 95%;
+    margin: 4em auto;  /* Ajustar el margen para la tabla */
+    border-collapse: collapse; /* Quita los espacios entre las celdas */
+    font-family: "Roboto", sans-serif;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Sombra para resaltar la tabla */
+    border-radius: 10px;  /* Bordes redondeados */
+}
+
+/* Estilo para los encabezados de la tabla */
+#manage_users_table thead th {
+    background-color: #f05328; /* Color de fondo similar al del resto del proyecto */
+    color: #ffffff;  /* Color de la fuente en blanco */
+    padding: 15px;
+    text-align: left;
+}
+
+/* editar {% block middle_column %} */
+
+
+
+/* Estilo para las filas de la tabla */
+#manage_users_table tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+#manage_users_table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;  /* Color para filas impares */
+}
+
+#manage_users_table tbody tr:nth-child(even) {
+    background-color: #ffffff;  /* Color para filas pares */
+}
+
+/* Estilo para las celdas de la tabla */
+#manage_users_table td {
+    padding: 0.5em 1em;
+    text-align: left;
+}
+
+#add-user-btn{
+	display: block;
+	margin: 0 auto;
+}
+
+label {
+	margin: 1em;
+}
+
+/* Estilo para los botones de la tabla */
+.btn-primary {
+    font-size: 1.2em;
+    color: #fff;
+    background-color: #f05328;
+	border-color: #f05328;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.fixed-top {
+	position: relative;
+}
+
+.btn-primary:hover {
+    background-color: #e04522; /* Un tono más oscuro al pasar el ratón */
+	border-color: #e04522;
+    transform: scale(1.05);
+}
+
+.modal-content {
+    background-color: rgba(255, 255, 255, 0.95);  /* Fondo blanco con un poco de transparencia */
+    padding: 20px;
+    border-radius: 10px;  /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* Añadir sombra para resaltar */
+}
+
+.modal-header, .modal-footer {
+    border: none;  /* Quitar bordes de los encabezados y pie de página de los modales */
+    padding-bottom: 10px;
+}
+
+.modal-title {
+    font-size: 1.8em;
+    color: #f05328;  /* Color para el título similar al logo */
+}
+
+.dataTables_info#manage_users_table_info {
+	margin: 1em;
+	text-decoration: underline;
+}
+
+.close {
+    color: #e04522;  /* Color similar al hover del botón */
+    font-size: 1.5em;
+}
+
+/* -------- media query para el tamaño de la pantalla---------- */
+
+/* Media Query para pantallas de menos de 1200px */
+@media (max-width: 1200px) {
+    #manage_users_table {
+        width: 100%; /* Aumenta el ancho de la tabla al 100% */
+        margin: 2em auto; /* Ajusta el margen superior para que no ocupe tanto espacio */
+    }
+
+	#manage_users_table_wrapper {
+		overflow-x: auto; /* Permite el desplazamiento horizontal */
+	}
+
+    #add-user-btn {
+        margin: 1em auto; /* Asegura que el botón de "Registrar nuevo usuario" esté bien centrado */
+    }
+
+    .modal-dialog {
+        width: 90%; /* Ajusta el tamaño del modal para pantallas medianas */
+    }
+}
+
+/* Media Query para pantallas de menos de 780px (tabletas) */
+@media (max-width: 780px) {
+    h1 {
+        font-size: 1.8em; /* Reduce el tamaño del título */
+    }
+
+	#manage_users_table_wrapper {
+		overflow-x: auto; /* Permite el desplazamiento horizontal */
+	}
+
+    #manage_users_table thead th,
+    #manage_users_table td {
+        padding: 10px; /* Reduce el padding para la tabla */
+        font-size: 0.9em; /* Reduce el tamaño del texto en la tabla */
+    }
+
+    #manage_users_table {
+        margin: 1em auto; /* Reduce los márgenes de la tabla */
+    }
+
+    .btn-primary {
+        font-size: 1em; /* Ajusta el tamaño del botón */
+        padding: 8px 15px; /* Reduce el padding para los botones */
+        width: 90%; /* Aumenta el ancho de los botones para que sean más fáciles de tocar */
+        margin: 10px 0; /* Añade un margen vertical para separarlos mejor */
+    }
+
+    .modal-dialog {
+        width: 95%; /* Ajusta el ancho del modal */
+    }
+}
+
+/* Media Query para pantallas de menos de 480px (teléfonos) */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5em; /* Reduce aún más el tamaño del título para pantallas pequeñas */
+        text-align: center; /* Centra el título */
+    }
+
+	#manage_users_table_wrapper {
+		overflow-x: auto; /* Permite el desplazamiento horizontal */
+	}
+
+    #manage_users_table thead th,
+    #manage_users_table td {
+        padding: 8px; /* Reduce el padding de las celdas */
+        font-size: 0.8em; /* Reduce el tamaño de la fuente en la tabla */
+    }
+
+    #add-user-btn {
+        font-size: 1em;
+        padding: 10px;
+        width: 100%; /* Aumenta el ancho del botón para que sea fácil de tocar */
+    }
+
+    .btn-primary {
+        font-size: 0.9em;
+        width: 100%; /* Asegura que los botones se estiren en pantallas pequeñas */
+        padding: 8px; /* Reduce el padding */
+    }
+
+    .modal-dialog {
+        width: 100%; /* Haz que el modal ocupe casi toda la pantalla para dispositivos móviles */
+    }
+
+    .modal-header, .modal-footer {
+        padding: 15px; /* Aumenta un poco el padding para una mejor legibilidad */
+    }
+
+    .modal-title {
+        font-size: 1.5em; /* Reduce el tamaño del título del modal */
+    }
+}
+

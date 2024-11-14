@@ -3,89 +3,90 @@
 {% block head %}
 {{ super() }}
 <!-- Add DataTables CSS in the head section -->
-<link href="
-https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/css/jquery.dataTables.min.css
-" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/reset.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/css/jquery.dataTables.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/manage_users.css') }}">
 {% endblock %}
 
-{% block middle_column %}
-<h1>Administrar Usuarios</h1>
+<html>
+	{% block middle_column %}
+	<h1>Administrar Usuarios</h1>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" id="add-user-btn">
-    Registrar nuevo usuario
-</button>
+	<button type="button" class="btn btn-primary" data-toggle="modal" id="add-user-btn">
+		Registrar nuevo usuario
+	</button>
 
-<table id="manage_users_table" class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre(s)</th>
-            <th>Apellidos</th>
-            <th>Correo</th>
-            <th>Teléfono</th>
-            <th>Estatus</th>
-            <th>Permisos</th>
-            <th>Última vez modificado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr>
-            <td>{{ user.USR_userId }}</td>
-            <td>{{ user.USR_name }}</td>
-            <td>{{ user.USR_last_name }}</td>
-            <td>{{ user.USR_email }}</td>
-            <td>{{ user.USR_telephone }}</td>
-            <td>{{ user.status.ST_value }}</td>
-            <td>{{ user.permit.PMT_type }}</td>
-            <td>{{ user.USR_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-            <td>
-                <button class="btn btn-primary edit-user-btn" data-id="{{ user.USR_userId }}">Modificar</button>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endblock %}
+	<table id="manage_users_table" class="table table-striped">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Nombre(s)</th>
+				<th>Apellidos</th>
+				<th>Correo</th>
+				<th>Teléfono</th>
+				<th>Estatus</th>	
+				<th>Permisos</th>
+				<th>Última vez modificado</th>
+				<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+			<tr>
+				<td>{{ user.USR_userId }}</td>
+				<td>{{ user.USR_name }}</td>
+				<td>{{ user.USR_last_name }}</td>
+				<td>{{ user.USR_email }}</td>
+				<td>{{ user.USR_telephone }}</td>
+				<td>{{ user.status.ST_value }}</td>
+				<td>{{ user.permit.PMT_type }}</td>
+				<td>{{ user.USR_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+				<td>
+					<button class="btn btn-primary edit-user-btn" data-id="{{ user.USR_userId }}">Modificar</button>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% endblock %}
 
-{% block modals %}
-<div id="editUserModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Editar usuario"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 class="modal-title" id="editUserModalLabel">Editar usuario</h5>
-            </div>
-            <div class="modal-body">
+	{% block modals %}
+	<div id="editUserModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Editar usuario"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h5 class="modal-title" id="editUserModalLabel">Editar usuario</h5>
+				</div>
+				<div class="modal-body">
 
-            </div>
-        </div>
-    </div>
-</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<div id="addUserModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Agregar usuario"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 class="modal-title" id="addUserModalLabel">Agregar usuario</h5>
-            </div>
-            <div class="modal-body">
+	<div id="addUserModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Agregar usuario"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h5 class="modal-title" id="addUserModalLabel">Agregar usuario</h5>
+				</div>
+				<div class="modal-body">
 
-            </div>
-        </div>
-    </div>
-</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-{% endblock %}
-
+	{% endblock %}
+</html>
 
 
 {% block scripts %}
