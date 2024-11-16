@@ -4,7 +4,7 @@ from app.blueprints.manage_users.manage_users import ManageUsersView
 from app.blueprints.manage_users.edit_user import EditUserView
 
 manage_users = Blueprint(
-    "manage_users", __name__, template_folder="templates/register_user"
+    "manage_users", __name__, template_folder="templates/manage_users"
 )
 manage_users.add_url_rule(
     "/administrar_usuarios", view_func=ManageUsersView.as_view("manage_users")
