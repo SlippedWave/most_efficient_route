@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
-from wtforms.validators import DataRequired, Regexp, EqualTo
+from wtforms.validators import DataRequired, Regexp, EqualTo, Optional
 
 
 class EditUserInfoForm(FlaskForm):
@@ -11,10 +11,11 @@ class EditUserInfoForm(FlaskForm):
     plain_password = PasswordField(
         "Nueva Contraseña",
         validators=[
+            Optional(),
             Regexp(
                 '^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.{8,})',
                 message="La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula y un carácter especial.",
-            )
+            ),
         ],
     )
     confirm_password = PasswordField(

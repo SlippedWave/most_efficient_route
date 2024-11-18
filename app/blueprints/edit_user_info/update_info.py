@@ -33,7 +33,7 @@ class UpdateInfoView(MethodView):
             try:
                 db.session.commit()
                 flash("¡Cambios realizados exitosamente!", "success")
-                return redirect(url_for("manage_users.manage_users"))  
+                return redirect(url_for("edit_user_info.edit_user_info"))  
             except Exception as e:
                 print(f"Error updating user: {e}")
                 return jsonify(

@@ -6,7 +6,7 @@ edit_user_info = Blueprint(
 )
 
 edit_user_info.add_url_rule(
-    "/actualizar_informacion", view_func=UpdateInfoView.as_view("update_info")
+    "/actualizar_informacion", view_func=UpdateInfoView.as_view("edit_user_info")
 )
 
 class View:
