@@ -37,9 +37,9 @@
             <td>{{ package.assigned_to_user }}</td>
             <td>
                 {% if package.PCK_delivery_date %}
-                    {{ package.PCK_delivery_date.strftime('%Y-%m-%d %H:%M:%S') }}
+                {{ package.PCK_delivery_date.strftime('%Y-%m-%d %H:%M:%S') }}
                 {% else %}
-                    N / A
+                N / A
                 {% endif %}
             </td>
             <td>{{ package.PCK_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>

@@ -38,8 +38,7 @@ class EditUserView(MethodView):
             user.USR_name = form.USR_name.data
             user.USR_last_name = form.USR_last_name.data
             user.USR_telephone = form.USR_telephone.data
-            user.USR_address = form.USR_address.data
-
+            user.USR_address = form.USR_address.data       
             user.USR_PER_permitId = form.permit.data.PMT_permitId
             user.USR_ST_statusId = form.status.data.ST_statusId
             user.USR_modified_by = current_user.USR_userId
@@ -51,7 +50,7 @@ class EditUserView(MethodView):
 
             try:
                 db.session.commit()
-                flash("¡Usuario registrado exitosamente!", "success")
+                flash("¡Cambios realizados exitosamente!", "success")
                 return redirect(url_for("manage_users.manage_users"))
             except Exception as e:
                 print(f"Error updating user: {e}")

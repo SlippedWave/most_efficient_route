@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block middle_column %}
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Información del Usuario</h2>
+        </div>
+        <div class="card-body">
+            <h3 class="mb-3">Hola, {{ current_user.USR_name }} {{ current_user.USR_last_name }}</h3>
+            <p class="mb-2">
+                <strong>Usuario:</strong> {{ current_user.status.ST_value }} <br>
+                <strong>Permisos:</strong> {{ current_user.permit.PMT_type }}
+            </p>
+            <hr>
+            <h4>Contacto:</h4>
+            <p class="mb-1">
+                <strong>Email:</strong> {{ current_user.USR_email }} <br>
+                <strong>Teléfono:</strong> {{ current_user.USR_telephone }}
+            </p>
+            <p><strong>Dirección:</strong> {{ current_user.USR_address }}</p>
+            <hr>
+            <h4 class="mb-3">¿Deseas actualizar tu información?</h4>
+            <div class="text-center mb-4">
+                <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal"
+                    data-bs-target="#editUserInfoModal">
+                    Actualizar Información
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modals %}
+<div id="editUserInfoModal" class="modal fade" tabindex="-1" aria-labelledby="editUserInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="editUserInfoModalLabel">Actualizar Información del Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST">
+                <div class="modal-body">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        <label for="USR_telephone" class="form-label">Teléfono</label>
+                        {{ form.USR_telephone(class="form-control", placeholder="Ingresa tu teléfono") }}
+                        {% if form.USR_telephone.errors %}
+                        <div class="text-danger">{{ form.USR_telephone.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="USR_address" class="form-label">Dirección</label>
+                        {{ form.USR_address(class="form-control", placeholder="Ingresa tu dirección") }}
+                        {% if form.USR_address.errors %}
+                        <div class="text-danger">{{ form.USR_address.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="plain_password" class="form-label">Nueva Contraseña</label>
+                        {{ form.plain_password(class="form-control", placeholder="Ingresa una nueva contraseña") }}
+                        {% if form.plain_password.errors %}
+                        <div class="text-danger">{{ form.plain_password.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label">Confirmar Contraseña</label>
+                        {{ form.confirm_password(class="form-control", placeholder="Confirma tu contraseña") }}
+                        {% if form.confirm_password.errors %}
+                        <div class="text-danger">{{ form.confirm_password.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}
