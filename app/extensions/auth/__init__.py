@@ -1,9 +1,24 @@
 from functools import update_wrapper
 
-from flask import current_app, abort
+from flask import current_app, abort, url_for
 from flask_login import current_user
 
 
+def get_pages_by_role():
+    return {
+        "Administrador": [
+            {"name": "Usuarios", "url": url_for("manage_users.manage_users")},
+            {"name": "Paquetes", "url": url_for("manage_packages.manage_packages")},
+        ],
+        "Almacenista": [
+            {"name": "Paquetes", "url": url_for("manage_packages.manage_packages")},
+        ],
+        "Repartidor": [
+            {"name": "Mis paquetes", "url": ""},
+            {"name": "Mi ruta", "url": ""},
+        ],
+    }
+    
 def authorized(checker):
     """Check if current user is authenticated and authorized.
 
@@ -23,6 +38,7 @@ def require(checker):
             pass
 
     """
+
     def decorator(fn):
         def wrapped_function(*args, **kwargs):
             if not current_user.is_authenticated:
@@ -30,9 +46,12 @@ def require(checker):
             if not checker():
                 abort(403)
             return fn(*args, **kwargs)
+
         return update_wrapper(wrapped_function, fn)
+
     return decorator
-    
+
+
 class has_permit_type(object):
     """Check if the current user's permit matches any of the provided permit types."""
 

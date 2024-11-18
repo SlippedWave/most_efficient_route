@@ -1,0 +1,112 @@
+/* Override Bootstrap Colors */
+:root {
+    --bs-primary: #fd7e14; /* Green - New primary color */
+    --bs-secondary: #FF5722; /* Orange - New secondary color */
+    --bs-success: #8BC34A; /* Light Green */
+    --bs-info: #00BCD4; /* Cyan */
+    --bs-warning: #FFC107; /* Amber */
+    --bs-danger: #F44336; /* Red */
+    --bs-light: #F1F1F1; /* Light Gray */
+    --bs-dark: #212121; /* Dark Gray */
+    --bs-body-bg: #f8f9fa; /* Background */
+    --bs-body-color: #333333; /* Text color */
+}
+
+/* Navbar Customization */
+.navbar {
+    min-height: 4.5rem; /* Set a minimum height for the navbar */
+    background-color: var(--bs-light); /* Light background for navbar */
+    border-bottom: 2px solid var(--bs-primary); /* Primary color border */
+}
+
+.navbar-brand {
+    font-size: 2rem; /* Slightly larger brand font size */
+}
+
+.navbar .nav-link {
+    padding: 0.75rem 1rem; /* Adjust padding for nav links to match height */
+    font-size: 1rem; /* Optional: Adjust font size */
+    color: var(--bs-dark); /* Dark links */
+    font-weight: 500;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+    color: var(--bs-primary); /* Primary color on hover */
+    text-decoration: none;
+}
+
+.navbar .dropdown-menu {
+    margin-top: 0.5rem; /* Adjust dropdown menu position for thicker navbar */
+
+    background-color: var(--bs-light); /* Light background */
+    border: 1px solid var(--bs-dark); /* Dark border */
+}
+
+.navbar .dropdown-item {
+    color: var(--bs-dark);
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+    background-color: var(--bs-primary); /* Primary color background */
+    color: #ffffff; /* White text */
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #388E3C; /* Slightly darker green */
+    border-color: #388E3C;
+}
+
+.btn-outline-danger {
+    color: var(--bs-danger);
+    border-color: var(--bs-danger);
+}
+
+.btn-outline-danger:hover,
+.btn-outline-danger:focus {
+    background-color: var(--bs-danger);
+    color: #ffffff;
+}
+
+/* Utility Classes */
+.text-primary {
+    color: var(--bs-primary) !important;
+}
+
+.bg-primary {
+    background-color: var(--bs-primary) !important;
+    color: #ffffff;
+}
+
+.bg-secondary {
+    background-color: var(--bs-secondary) !important;
+    color: #ffffff;
+}
+
+.bg-danger {
+    background-color: var(--bs-danger) !important;
+    color: #ffffff;
+}
+
+/* Table Styling */
+.table-primary {
+    background-color: var(--bs-primary) !important;
+    color: #ffffff;
+}
+
+.table-secondary {
+    background-color: var(--bs-secondary) !important;
+    color: #ffffff;
+}
+
+.table-hover tbody tr:hover {
+    background-color: var(--bs-light);
+}
