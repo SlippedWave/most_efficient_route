@@ -22,7 +22,8 @@ class LoginView(MethodView):
         form = LoginForm()
 
         if form.validate_on_submit():
-            user = User.query.filter_by(USR_email=form.email.data).first()
+            USR_email = form.email.data.strip()
+            user = User.query.filter_by(USR_email=USR_email).first()
             if user and user.check_password(form.password.data):
                 if user.is_active():       
                     login_user(user, remember=form.remember_me.data)

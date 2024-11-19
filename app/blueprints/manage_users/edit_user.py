@@ -6,10 +6,10 @@ from wtforms.validators import Optional, Regexp
 from app.models import User
 from app.blueprints.manage_users.set_user_info_form import SetUserInfoForm
 from app.extensions.database import db
-
+from app.extensions.auth import require, has_permit_type
 
 class EditUserView(MethodView):
-
+    @require(has_permit_type("Administrador"))
     def get(self, id):
         user = User.query.get_or_404(id)
         form = SetUserInfoForm(obj=user)

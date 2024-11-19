@@ -9,7 +9,7 @@ from app.extensions.database import db
 
 
 class RegisterUserView(MethodView):
-    @require(lambda: has_permit_type("Administrador"))
+    @require(has_permit_type("Administrador"))
     def get(self):
         form = SetUserInfoForm()
         return render_template(

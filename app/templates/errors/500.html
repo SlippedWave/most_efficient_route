@@ -1,14 +1,20 @@
 {% extends "base.html" %}
 
-{% block map %}
-<div class="hero-unit">
-    <h1>Error HTTP 500</h1>
-    <p>Un error inesperado ha ocurrido</p>
-    <p>
-        <a href="{{ url_for('home.home') }}" class="btn btn-primary btn-large">
-            Back
-        </a>
-    </p>
+{% block middle_column %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 text-center">
+            <div class="hero-unit p-5 border border-2 rounded-3 shadow-lg bg-light">
+                <h1 class="display-1 text-danger">¡Error HTTP 500!</h1>
+                <p class="lead text-muted">Ha ocurrido un error interno en el servidor. Estamos trabajando para
+                    solucionarlo.</p>
+                <p class="mt-4">
+                    <a href="{{ url_for('home.home') }}" class="btn btn-primary btn-lg shadow-sm">
+                        Regresar al menú
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
-
 {% endblock %}

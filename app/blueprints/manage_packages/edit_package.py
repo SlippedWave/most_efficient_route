@@ -5,10 +5,11 @@ from flask_login import current_user
 from app.models import Package
 from app.blueprints.manage_packages.set_package_info_form import SetPackageInfoForm
 from app.extensions.database import db
+from app.extensions.auth import require, has_permit_type
 
 
 class EditPackageView(MethodView):
-
+    @require(has_permit_type("Administrador", "Almacenista"))
     def get(self, id):
         package = Package.query.get_or_404(id)
         form = SetPackageInfoForm(obj=package)

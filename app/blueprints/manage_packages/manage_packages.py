@@ -6,7 +6,7 @@ from app.extensions.auth import require, has_permit_type
 
 
 class ManagePackagesView(MethodView):
-    @require(lambda: has_permit_type("Administrador", "Almacenista"))
+    @require(has_permit_type("Administrador", "Almacenista"))
     def get(self):
         drivers = (
             User.query.with_entities(

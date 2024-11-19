@@ -5,7 +5,7 @@ from app.models import User, Permit, Status
 from app.extensions.auth import require, has_permit_type
 
 class ManageUsersView(MethodView):
-    @require(lambda: has_permit_type("Administrador"))
+    @require(has_permit_type("Administrador"))
     def get(self):
         users = User.query.options(
             load_only(

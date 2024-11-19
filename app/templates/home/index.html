@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 
-{% block middle_column %}
-
+{% block head %}
+{{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/reset.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
 
+{% block middle_column %}
 <div class="hero-unit">
   <h1>¡Bienvenido!</h1>
   <p>Esto es Beaver Deliver. Por favor, use los botones a continuación para continuar.</p>

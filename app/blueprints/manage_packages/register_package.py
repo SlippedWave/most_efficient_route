@@ -9,7 +9,7 @@ from app.extensions.database import db
 
 
 class RegisterPackageView(MethodView):
-    @require(lambda: has_permit_type("Administrador"))
+    @require(has_permit_type("Administrador", "Almacenista"))
     def get(self):
         form = SetPackageInfoForm()
 

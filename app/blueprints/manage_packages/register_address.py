@@ -8,7 +8,7 @@ from app.extensions.database import db
 
 
 class RegisterAddressView(MethodView):
-    @require(lambda: has_permit_type("Administrador"))
+    @require(has_permit_type("Administrador", "Almacenista"))
     def get(self):
         form = SetAdressInfoForm()
 
