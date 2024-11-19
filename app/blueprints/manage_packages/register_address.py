@@ -1,4 +1,4 @@
-from flask import render_template, flash, url_for
+from flask import render_template, flash, url_for, redirect
 from flask.views import MethodView
 
 from app.models import Address
@@ -23,19 +23,19 @@ class RegisterAddressView(MethodView):
 
         if form.validate_on_submit():
             newAddress = Address(
-                ADD_city= form.ADD_city.data,
+                ADD_city=form.ADD_city.data,
                 ADD_ext_number=form.ADD_ext_number.data,
                 ADD_int_number=form.ADD_int_number.data,
                 ADD_state=form.ADD_state.data,
                 ADD_zip_code=form.ADD_zip_code.data,
                 ADD_neighborhood=form.ADD_neighborhood.data,
-                ADD_street=form.ADD_street.data
+                ADD_street=form.ADD_street.data,
             )
             db.session.add(newAddress)
             db.session.commit()
             flash("Dirección registrada exitosamente!", "success")
-            return 'success'
-        
+            return redirect(url_for("manage_packages.manage_packages"))
+
         flash("¡Se encontraron problemas en el registro!", "error")
         return render_template(
             "manage_packages/set_address_info_form.html",
