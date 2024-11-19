@@ -3,7 +3,6 @@ from app.blueprints.home.home import HomeView
 
 home = Blueprint('home', __name__, template_folder='templates/home')
 
-# Ruta para el splash screen
 @home.route('/')
 def splash():
     return render_template('splash.html')

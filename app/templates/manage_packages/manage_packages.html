@@ -6,52 +6,65 @@
 {% endblock %}
 
 {% block middle_column %}
-<h1>Administrar paquetes</h1>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="hero-unit p-5 border border-2 rounded-3 shadow-lg bg-light">
+                <h1 class="display-4 mb-4 text-center">Administrar paquetes</h1>
 
-<button type="button" class="btn btn-primary" id="add-package-btn">
-    Registrar nuevo paquete
-</button>
+                <!-- Register Package Button -->
+                <div class="text-center mb-4">
+                    <button type="button" class="btn btn-primary" id="add-package-btn">
+                        <i class="bi bi-plus-circle"></i> Registrar nuevo paquete
+                    </button>
+                </div>
 
-<table id="manage_packages_table" class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Dirección</th>
-            <th>Nombre del cliente</th>
-            <th>Teléfono</th>
-            <th>Estatus</th>
-            <th>Asignado a</th>
-            <th>Fecha de entrega</th>
-            <th>Última vez modificado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for package in packages %}
-        <tr>
-            <td>{{ package.PCK_packageId }}</td>
-            <td>{{ package.address }}</td>
-            <td>{{ package.PCK_client_name }}</td>
-            <td>{{ package.PCK_client_phone_num }}</td>
-            <td>{{ package.status.ST_value }}</td>
-            <td>{{ package.assigned_to_user }}</td>
-            <td>
-                {% if package.PCK_delivery_date %}
-                {{ package.PCK_delivery_date.strftime('%Y-%m-%d %H:%M:%S') }}
-                {% else %}
-                N / A
-                {% endif %}
-            </td>
-            <td>{{ package.PCK_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-            <td>
-                <button class="btn btn-primary edit-package-btn" data-id="{{ package.PCK_packageId }}" {% if
-                    package.status.ST_value=='3' %}disabled{% endif %}>Modificar
-                </button>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                <!-- Packages Table -->
+                <div>
+                    <table id="manage_packages_table" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Dirección</th>
+                                <th>Nombre del cliente</th>
+                                <th>Teléfono</th>
+                                <th>Estatus</th>
+                                <th>Asignado a</th>
+                                <th>Fecha de entrega</th>
+                                <th>Última vez modificado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for package in packages %}
+                            <tr>
+                                <td>{{ package.PCK_packageId }}</td>
+                                <td>{{ package.address }}</td>
+                                <td>{{ package.PCK_client_name }}</td>
+                                <td>{{ package.PCK_client_phone_num }}</td>
+                                <td>{{ package.status.ST_value }}</td>
+                                <td>{{ package.assigned_to_user }}</td>
+                                <td>
+                                    {% if package.PCK_delivery_date %}
+                                    {{ package.PCK_delivery_date.strftime('%Y-%m-%d %H:%M:%S') }}
+                                    {% else %} N / A {% endif %}
+                                </td>
+                                <td>{{ package.PCK_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                <td>
+                                    <button class="btn btn-warning edit-package-btn" data-id="{{ package.PCK_packageId }}" {% if package.status.ST_value=='3' %}disabled{% endif %}>
+                                        <i class="bi bi-pencil-square"></i> Modificar
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block modals %}
@@ -148,7 +161,8 @@
                             <td>{{ address.ADD_street }}</td>
                             <td>
                                 Ext: {{ address.ADD_ext_number }}
-                                {% if address.ADD_int_number %}, Int: {{ address.ADD_int_number }}{% endif %}
+                                {% if address.ADD_int_number %}, Int: {{ address.ADD_int_number }}{%
+                                endif %}
                             </td>
                             <td>{{ address.ADD_neighborhood }}</td>
                             <td>{{ address.ADD_zip_code }}</td>

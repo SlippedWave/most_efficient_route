@@ -2,24 +2,51 @@
 
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/reset.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% endblock %}
 
 {% block middle_column %}
-<div class="hero-unit">
-  <h1>¡Bienvenido!</h1>
-  <p>Esto es Beaver Deliver. Por favor, use los botones a continuación para continuar.</p>
-  <p>
-    {% if authenticated %}
-    <a href="{{ url_for('auth.logout') }}" class="btn btn-primary btn-large">Cerrar sesión</a>
-    {% else %}
-    <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-large">Iniciar sesión</a>
-    {% endif %}
-    <a href="{{ url_for('manage_users.manage_users') }}" class="btn btn-primary btn-large">Administrar usuarios</a>
-    <a href="{{ url_for('manage_packages.manage_packages') }}" class="btn btn-primary btn-large">Administrar paquetes</a>
+<div class="container py-5">
+    <div class="row align-items-center">
+        <div class="col-12 col-lg-6 mb-4 mb-lg-0">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Beaver Deliver"
+                class="img-fluid rounded-3 shadow-lg">
+        </div>
 
-  </p>
+        <div class="col-12 col-lg-6">
+            <div class="p-5 border border-2 rounded-3 shadow-lg bg-light">
+                <h1 class="display-4 mb-3 text-primary">Bienvenido a Beaver Deliver</h1>
+                <p class="lead text-muted">
+                    ¡Gestiona fácilmente tus paquetes y usuarios desde un solo lugar! Con Beaver Deliver puedes:
+                </p>
+                <ul class="list-unstyled text-start">
+                    <li class="mb-2">
+                        <span class="material-symbols-outlined text-success me-2">check_circle</span>
+                        Registrar y administrar paquetes de forma rápida.
+                    </li>
+                    <li class="mb-2">
+                        <span class="material-symbols-outlined text-success me-2">check_circle</span>
+                        Asignar entregas a tus repartidores.
+                    </li>
+                    <li class="mb-2">
+                        <span class="material-symbols-outlined text-success me-2">check_circle</span>
+                        Visualizar el historial de modificaciones y estatus.
+                    </li>
+                    <li class="mb-2">
+                        <span class="material-symbols-outlined text-success me-2">check_circle</span>
+                        Simplificar la gestión de usuarios y permisos.
+                    </li>
+                    <li>
+                        <span class="material-symbols-outlined text-success me-2">check_circle</span>
+                        Optimizar la ruta de entrega de tus paquetes.
+                    </li>
+                </ul>
+                <p class="mt-4">
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg shadow-sm">
+                        Comenzar ahora
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

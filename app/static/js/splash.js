@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Esperar 3 segundos y luego redireccionar
     setTimeout(function() {
-        window.location.href = "/home"; // Cambia '/home' a la ruta de tu página principal
+        window.location.href = "/home"; 
     }, 2000);
 });

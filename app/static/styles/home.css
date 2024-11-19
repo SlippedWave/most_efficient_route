@@ -1,0 +1,17 @@
+/* Asegúrate de que la imagen nunca sea más alta que el contenedor */
+img {
+    max-height: 500px;
+    object-fit: cover;
+}
+
+/* Estilo adicional para la lista */
+ul li i {
+    font-size: 1.2rem;
+}
+
+/* Espaciado para dispositivos pequeños */
+@media (max-width: 768px) {
+    .p-5 {
+        padding: 2rem !important;
+    }
+}
