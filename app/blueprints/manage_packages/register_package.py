@@ -35,7 +35,7 @@ class RegisterPackageView(MethodView):
             db.session.add(newPackage)
             db.session.commit()
             flash("¡Usuario registrado exitosamente!", "success")
-            return redirect(url_for("manage_users.manage_users"))
+            return redirect(url_for("manage_packages.manage_packages"))
 
         flash("¡Se encontraron problemas en el registro!", "error")
         return render_template(

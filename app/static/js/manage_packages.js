@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // Initialize DataTables
-    var packagesTable = $('#manage_packages_table').DataTable({
+    var packagesTable = $('#management_table').DataTable({
         language: {
             url: 'https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json',
         }
@@ -38,8 +38,25 @@ $(document).ready(function () {
                     </tr>
                 `);
 
+                $('#add_new_address_btn').off('click');
                 $('#add_new_address_btn').on('click', function () {
-                    addAddressModal.show();
+
+                    let modalBody = $('#addAddressModal').find('.modal-dynamic');
+                    modalBody.html('');
+
+                    $.ajax({
+                        url: '/registrar_direccion',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function (response) {
+                            modalBody.html(response);
+                            addAddressModal.show();
+                        },
+                        error: function () {
+                            alert('Error al cargar el formulario de registro');
+                        }
+                    });
+
                 });
             }
         }
@@ -73,7 +90,7 @@ $(document).ready(function () {
     var selectAddressModal = new bootstrap.Modal(document.getElementById('selectAddressModal'));
     var addAddressModal = new bootstrap.Modal(document.getElementById('addAddressModal'));
 
-    $('button#add-package-btn').on('click', function () {
+    $('button#add-record-btn').on('click', function () {
         let modalBody = $('#addPackageModal').find('.modal-dynamic');
         modalBody.html('');
 

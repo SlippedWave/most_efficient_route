@@ -47,7 +47,7 @@ class EditPackageView(MethodView):
             try:
                 db.session.commit()
                 flash("¡Usuario registrado exitosamente!", "success")
-                return redirect(url_for("manage_users.manage_users"))
+                return redirect(url_for("manage_packages.manage_packages"))
             except Exception as e:
                 print(f"Error updating user: {e}")
                 return jsonify(

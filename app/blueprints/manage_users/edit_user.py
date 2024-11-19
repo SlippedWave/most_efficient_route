@@ -16,7 +16,7 @@ class EditUserView(MethodView):
 
         form.plain_password.validators = [
             Optional(),
-            Regexp('^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.{8,})'),
+            Regexp('^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.{8,})')
         ]
         form.USR_email.render_kw = {"class": "form-control", "readonly": "readonly"}
         if current_user.USR_userId == id:
@@ -32,6 +32,11 @@ class EditUserView(MethodView):
         user = User.query.get_or_404(id)
 
         form = SetUserInfoForm(request.form, obj=user)
+        
+        form.plain_password.validators = [
+            Optional(),
+            Regexp('^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.{8,})')
+        ]
 
         if form.validate_on_submit():
             user.USR_email = form.USR_email.data

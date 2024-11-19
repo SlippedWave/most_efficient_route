@@ -1,14 +1,14 @@
 $(document).ready(function () {
     // Initialize DataTable
-    $('#manage_users_table').dataTable({
+    $('#management_table').dataTable({
         language: {
             url: "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
         }
     });
 
-    $('button#add-user-btn').on('click', function () {
+    $('button#add-record-btn').on('click', function () {
 
-        var modalBody = $('#addUserModal').find('.modal-body');
+        var modalBody = $('#addUserModal').find('.modal-dynamic');
         modalBody.html('');
 
         $.ajax({
@@ -30,7 +30,7 @@ $(document).ready(function () {
     $('body').on('click', '.edit-user-btn', function () {
         var userId = $(this).data('id');
 
-        var modalBody = $('#editUserModal').find('.modal-body');
+        var modalBody = $('#editUserModal').find('.modal-dynamic');
         modalBody.html('');
 
         $.ajax({

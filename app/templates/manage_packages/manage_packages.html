@@ -3,6 +3,8 @@
 {% block head %}
 {{ super() }}
 <link href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/manage_users.css') }}">
+
 {% endblock %}
 
 {% block middle_column %}
@@ -13,15 +15,15 @@
                 <h1 class="display-4 mb-4 text-center">Administrar paquetes</h1>
 
                 <!-- Register Package Button -->
-                <div class="text-center mb-4">
-                    <button type="button" class="btn btn-primary" id="add-package-btn">
-                        <i class="bi bi-plus-circle"></i> Registrar nuevo paquete
+                <div class="mb-4">
+                    <button type="button" class="btn btn-primary" id="add-record-btn">
+                        Registrar nuevo paquete
                     </button>
                 </div>
 
                 <!-- Packages Table -->
-                <div>
-                    <table id="manage_packages_table" class="table table-striped table-bordered">
+                <div class="table-responsive">
+                    <table id="management_table" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -189,7 +191,7 @@
                 <h5 class="modal-title" id="addAddressModalLabel">Agregar dirección</h5>
                 <button type="button" class="btn-close" id="closeAddAddressModal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-dynamic">
                 <!-- Content will be loaded dynamically -->
             </div>
         </div>
