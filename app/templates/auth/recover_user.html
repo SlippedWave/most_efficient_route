@@ -12,12 +12,12 @@
         <div class="col-12 col-md-8 col-lg-6">
             <div class="p-5 border border-2 rounded-3 shadow-lg bg-light">
                 <!-- Login Header -->
-                <h1 class="text-primary fw-bold mb-4 text-center">Iniciar Sesión</h1>
+                <h1 class="text-primary fw-bold mb-4 text-center">Recuperar mi contraseña</h1>
                 <p class="text-muted text-center mb-4">
-                    Ingresa tus datos para acceder a tu cuenta.
+                    Ingresa tu correo electrónico para recibir el código para restablecer tu contraseña.
                 </p>
                 <!-- Login Form -->
-                <form action="{{ url }}" method="POST" name="login" class="form-horizontal">
+                <form action="{{ url }}" method="POST" name="recover_user" class="form-horizontal">
                     {{ form.hidden_tag() }}
                     <!-- Email Input -->
                     <div class="mb-3">
@@ -27,32 +27,14 @@
                         <span class="text-danger small d-block mt-1">[{{ error }}]</span>
                         {% endfor %}
                     </div>
-                    <!-- Password Input -->
-                    <div class="mb-3">
-                        <label for="password" class="form-label fw-semibold">Contraseña</label>
-                        {{ form.password(size=80, class_="form-control form-control-lg", placeholder="Ingresa tu contraseña") }}
-                        {% for error in form.errors.password %}
-                        <span class="text-danger small d-block mt-1">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <!-- Remember Me Checkbox -->
-                    <div class="mb-3 form-check">
-                        <label class="form-check-label" for="remember_me">
-                            {{ form.remember_me }} Recuérdame
-                        </label>
-                    </div>
+                    
                     <!-- Submit Button -->
                     <div class="d-grid mb-3">
                         <button type="submit" class="btn btn-primary btn-lg">
                             Iniciar Sesión
                         </button>
                     </div>
-                    <!-- Forgot Password Link -->
-                    <div class="text-center">
-                        <a href="{{ url_for('auth.recover_user') }}" class="text-decoration-none text-primary">
-                            ¿Olvidaste tu contraseña?
-                        </a>
-                    </div>
+
                 </form>
             </div>
         </div>

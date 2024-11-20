@@ -15,7 +15,7 @@ html, body {
     --bs-info: #00BCD4; /* Cyan */
     --bs-warning: #FFC107; /* Amber */
     --bs-danger: #F44336; /* Red */
-    --bs-light: #F1F1F1; /* Light Gray */
+    --bs-light: #fffef5; /* Light Gray */
     --bs-dark: #212121; /* Dark Gray */
     --bs-body-bg: #f8f9fa; /* Background */
     --bs-body-color: #333333; /* Text color */

@@ -58,15 +58,8 @@ class EditUserView(MethodView):
                 flash("¡Cambios realizados exitosamente!", "success")
                 return redirect(url_for("manage_users.manage_users"))
             except Exception as e:
-                print(f"Error updating user: {e}")
-                return jsonify(
-                    {"status": "error", "message": "Error al actualizar el usuario"}
-                )
+                flash("Error al registrar los cambios", "error")
+
         else:
-            return jsonify(
-                {
-                    "status": "error",
-                    "message": "Formulario no válido",
-                    "errors": form.errors,
-                }
-            )
+            flash("Formulario inválido", "error")
+

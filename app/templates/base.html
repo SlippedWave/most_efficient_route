@@ -21,7 +21,7 @@
 </head>
 {% endblock %}
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-3">
         <div class="container">
@@ -90,24 +90,6 @@
 
 
     {% block page_header %}
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="span2"></div>
-            <div class="span5">
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                {% for message in messages %}
-                <div class="alert alert-success">
-                    {{ message }}
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                </div>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
-            </div>
-            <div class="span4"></div>
-        </div>
-    </div>
     {% endblock %}
 
     {% block content %}
@@ -130,13 +112,75 @@
     {% endblock %}
 
     {% block page_footer %}
-    <!-- Footer content here -->
+    <footer class="text-center text-lg-start bg-light shadow-lg py-4 mt-auto border-top">
+        <div class="container">
+            <!-- Row for content -->
+            <div class="row align-items-center">
+                <!-- Main Text Section -->
+                <div class="col-md-8 mb-4 mb-md-0">
+                    <h5 class="text-primary fw-bold">Beaver Deliver</h5>
+                    <p class="text-muted mb-0">
+                        ¡Gracias por usar Beaver Deliver! Nos esforzamos por brindarte el mejor servicio de planeación
+                        de
+                        rutas de entrega posible. Tu satisfacción es nuestra prioridad.
+                    </p>
+                </div>
+
+                <!-- Social Media Links -->
+                <div class="col-md-4 text-md-end">
+                    <h6 class="text-secondary fw-semibold mb-3">Escríbenos a:</h6>
+                    <p class="text-muted">
+                        help@belicodeinc.com
+                    </p>
+                </div>
+            </div>
+
+            <!-- Bottom Section -->
+            <div class="text-center py-3 mt-3 border-top">
+                <small class="text-muted">
+                    © 2024 <span class="fw-bold">Belicode Inc.</span> Todos los derechos reservados.
+                </small>
+            </div>
+        </div>
+    </footer>
+
     {% endblock %}
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="toast align-items-center text-bg-{{ category if category != 'message' else 'primary' }} border-0"
+            role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    {{ message }}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
 
     <!-- Block for modals -->
     {% block modals %}{% endblock %}
 
-    {% block scripts %}{% endblock %} <!-- Block for custom scripts -->
+    {% block scripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toastElList = [].slice.call(document.querySelectorAll('.toast'));
+            toastElList.map(function (toastEl) {
+                const toast = new bootstrap.Toast(toastEl, { delay: 3000 }); // Show toast for 3 seconds
+                toast.show();
+            });
+        });
+    </script>
+
+    {% endblock %} <!-- Block for custom scripts -->
 </body>
 
 </html>

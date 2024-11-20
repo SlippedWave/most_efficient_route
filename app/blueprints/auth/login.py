@@ -12,7 +12,7 @@ class LoginView(MethodView):
         
         form = LoginForm()
         return render_template('auth/login.html',
-                               title='Sign In',
+                               title='Iniciar sesión',
                                form=form)
 
     def post(self):
@@ -31,11 +31,10 @@ class LoginView(MethodView):
                     flash('¡Inicio de sesión exitoso!', 'success')
                     return redirect(request.args.get('next') or '/')
                 else:
-                    flash(user.status)
-                    flash('¡Este usuario está deshabilitado', 'error')
+                    flash('¡Este usuario está deshabilitado', 'danger')
             else:
-                flash('¡Contraseña o correo incorrecto!', 'error')
+                flash('¡Contraseña o correo incorrecto!', 'danger')
 
         return render_template('auth/login.html',
-                               title='Sign In',
+                               title='Iniciar sesión',
                                form=form)

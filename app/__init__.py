@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 
 from app.extensions.auth import authorized, get_pages_by_role
 from app.extensions.database import db, uri
+from app.extensions.mail import mail
 
 load_dotenv()
 
@@ -24,7 +25,16 @@ app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 app.config["DEBUG"] = True
 
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER')
+app.config['MAIL_PORT'] = os.environ.get('MAIL_PORT')
 
+
+
+mail.init_app(app)
 # Initialize extensions
 db.init_app(app)
 login_manager = LoginManager(app)
