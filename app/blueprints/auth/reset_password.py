@@ -1,8 +1,8 @@
 import os
 from itsdangerous import URLSafeTimedSerializer
-from flask import render_template, flash, redirect, request, session, url_for
+from flask import render_template, flash, redirect, request, url_for
 from flask.views import MethodView
-from flask_login import login_user, current_user
+from flask_login import current_user
 
 from app.models import User
 from app.extensions.database import db
@@ -23,6 +23,13 @@ def validate_reset_token(token, max_age=14400):
 class ResetPasswordView(MethodView):
     def get(self, token):
 
+        if current_user.is_authenticated:
+            flash(
+                "No tienes que tener una sesión activa para acceder aquí.",
+                "danger",
+            )
+            return redirect(request.args.get("next") or "/")
+
         email = validate_reset_token(token)
 
         if not email:
@@ -35,10 +42,20 @@ class ResetPasswordView(MethodView):
         form = ResetPasswordForm()
 
         return render_template(
-            "auth/reset_password.html", title="Reestablecer contraseña", form=form
+            "auth/reset_password.html",
+            title="Reestablecer contraseña",
+            form=form,
+            url=url_for("auth.reset_password"),
         )
 
     def post(self, token):
+
+        if current_user.is_authenticated:
+            flash(
+                "No tienes que tener una sesión activa para acceder aquí.",
+                "danger",
+            )
+            return redirect(request.args.get("next") or "/")
 
         email = validate_reset_token(token)
 
@@ -71,6 +88,10 @@ class ResetPasswordView(MethodView):
             except Exception as e:
                 flash("Error al registrar los cambios", "error")
 
+        flash("Hubo un error con el formulario.", "danger")
         return render_template(
-            "auth/reset_password.html", title="Reestablecer contraseña", form=form
+            "auth/reset_password.html",
+            title="Reestablecer contraseña",
+            form=form,
+            url=url_for("auth.reset_password")
         )

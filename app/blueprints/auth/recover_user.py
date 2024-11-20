@@ -3,6 +3,7 @@ from flask import render_template, flash, url_for
 from flask.views import MethodView
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer
+from flask_login import current_user
 
 from app.models import User
 from app.blueprints.auth.recover_user_form import RecoverUserForm
@@ -22,6 +23,14 @@ def generate_password_reset_link(email):
 class RecoverUserView(MethodView):
 
     def get(self):
+
+        if current_user.is_authenticated:
+            flash(
+                "No tienes que tener una sesión activa para acceder aquí.",
+                "danger",
+            )
+            return redirect(request.args.get("next") or "/")
+
         form = RecoverUserForm()
 
         return render_template(
@@ -29,6 +38,13 @@ class RecoverUserView(MethodView):
         )
 
     def post(self):
+
+        if current_user.is_authenticated:
+            flash(
+                "No tienes que tener una sesión activa para acceder aquí.",
+                "danger",
+            )
+            return redirect(request.args.get("next") or "/")
 
         form = RecoverUserForm()
         if form.validate_on_submit():
@@ -54,4 +70,7 @@ class RecoverUserView(MethodView):
                     "¡No se encontró una cuenta asociada al correo otorgado!", "danger"
                 )
 
-        return render_template("auth/recover_user.html", form=form)
+        flash("Hubo un error con el formulario.", "danger")
+        return render_template(
+            "auth/recover_user.html", form=form, url=url_for("auth.recover_user")
+        )

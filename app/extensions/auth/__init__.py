@@ -14,11 +14,16 @@ def get_pages_by_role():
             {"name": "Paquetes", "url": url_for("manage_packages.manage_packages")},
         ],
         "Repartidor": [
-            {"name": "Mis paquetes", "url": ""},
+            {
+                "name": "Mis paquetes a entregar",
+                "url": url_for("select_packages_to_deliver.select_packages_to_deliver"),
+                
+            },
             {"name": "Mi ruta", "url": ""},
         ],
     }
-    
+
+
 def authorized(checker):
     """Check if current user is authenticated and authorized.
 
