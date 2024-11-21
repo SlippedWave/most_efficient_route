@@ -17,6 +17,13 @@
         </div>
 
         <div class="mb-3">
+            <label for="PCK_client_phone_num" class="form-label">Información especial</label>
+            <div>
+                {{ form.PCK_special_delivery_instructions(class="form-control") }}
+            </div>
+        </div>
+
+        <div class="mb-3">
             <label for="status" class="form-label">Estado</label>
             <div>
                 {{ form.status(class="form-control") }}

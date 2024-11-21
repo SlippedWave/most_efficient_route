@@ -2,6 +2,7 @@ from flask import render_template, jsonify, request, redirect, url_for, flash
 from flask.views import MethodView
 from flask_login import current_user
 from wtforms.validators import Optional, Regexp
+from datetime import datetime
 
 from app.models import User
 from app.blueprints.manage_users.set_user_info_form import SetUserInfoForm
@@ -47,6 +48,8 @@ class EditUserView(MethodView):
             user.USR_PER_permitId = form.permit.data.PMT_permitId
             user.USR_ST_statusId = form.status.data.ST_statusId
             user.USR_modified_by = current_user.USR_userId
+            user.USR_last_modified = datetime.now()
+
 
             plain_password = form.plain_password.data
 

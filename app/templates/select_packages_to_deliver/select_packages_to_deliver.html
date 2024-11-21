@@ -31,7 +31,7 @@
                                 <th>Dirección</th>
                                 <th>Nombre del cliente</th>
                                 <th>Teléfono</th>
-                                <th>indicaciones especiales</th>
+                                <th>Indicaciones especiales</th>
                                 <th>Fecha de entrega estipulada</th>
                                 <th>Última vez modificado</th>
                                 <!-- <th>Acciones</th> -->
@@ -45,7 +45,11 @@
                                 <td>{{ package.PCK_client_name }}</td>
                                 <td>{{ package.PCK_client_phone_num }}</td>
                                 <td>{{ package.PCK_special_delivery_instructions }}</td>
-                                <td>{{ package.PCK_delivery_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                <td>
+                                    {% if package.PCK_delivery_date %}
+                                    {{ package.PCK_delivery_date.strftime('%Y-%m-%d') }}
+                                    {% else %} N / A {% endif %}
+                                </td>
                                 <td>{{ package.PCK_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
                                 <!--
                                 <td>
@@ -68,59 +72,57 @@
 
 {% block modals %}
 
-<div id="selectPackageModal" class="modal" tabindex="-1" aria-labelledby="Seleccionar dirección" aria-hidden="true">
-    <div class="modal-dialog">
+<div id="selectPackageModal" class="modal fade" tabindex="-1" aria-labelledby="Seleccionar dirección"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="selectPackageModalTitle">Seleccionar paquete a entregar</h5>
-                <button type="button" class="btn-close" id="closeSelectPackageModal" aria-label="Close"></button>
             </div>
             <form method="POST" action="{{ url }}" id="select_packages_to_deliver" class="form-horizontal">
                 <div class="modal-body">
                     {{ form.hidden_tag() }}
 
-                    <table id="select_package_table" class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Dirección</th>
-                                <th>Nombre del cliente</th>
-                                <th>Teléfono</th>
-                                <th>Última vez modificado</th>
-                                <!-- <th>Acciones</th> -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for package in packages %}
-                            <tr>
-                                <td>{{ package.PCK_packageId }}</td>
-                                <td>{{ package.address }}</td>
-                                <td>{{ package.PCK_client_name }}</td>
-                                <td>{{ package.PCK_client_phone_num }}</td>
-                                <td>{{ package.PCK_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-                                <!--
-                                <td>
-                                    <button class="btn btn-warning edit-package-btn" data-id="{{ package.PCK_packageId }}" {% if package.status.ST_value=='3' %}disabled{% endif %}>
-                                        <i class="bi bi-pencil-square"></i> Modificar
-                                    </button>
-                                </td>
-                                -->
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table id="select_package_table" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Dirección</th>
+                                    <th>Nombre del cliente</th>
+                                    <th>Teléfono</th>
+                                    <th>Última vez modificado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for package in packages %}
+                                <tr>
+                                    <td>{{ package.PCK_packageId }}</td>
+                                    <td>{{ package.address }}</td>
+                                    <td>{{ package.PCK_client_name }}</td>
+                                    <td>{{ package.PCK_client_phone_num }}</td>
+                                    <td>{{ package.PCK_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
                     {{ form.PCK_packagesId }}
                 </div>
                 <div class="modal-footer">
                     <div class="mb-3">
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
-                    <button type="button" class="btn btn-secondary" id="closeSelectPackageModalFooter">Cerrar</button>
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-primary" id="closeSelectPackageModalFooter">Cerrar</button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 
 {% endblock %}
 

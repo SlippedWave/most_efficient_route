@@ -1,6 +1,7 @@
 from flask import render_template, jsonify, request, redirect, url_for, flash
 from flask.views import MethodView
 from flask_login import current_user
+from datetime import datetime
 
 from app.models import User
 from app.blueprints.edit_user_info.edit_user_info_form import EditUserInfoForm
@@ -26,7 +27,9 @@ class UpdateInfoView(MethodView):
         if form.validate_on_submit():
             user.USR_telephone = form.USR_telephone.data
             user.USR_address = form.USR_address.data
-            
+            user.USR_last_modified = datetime.now()
+            user.USR_modified_by = current_user.USR_userId
+
             if form.plain_password.data:
                 user.set_password(form.plain_password.data)
 

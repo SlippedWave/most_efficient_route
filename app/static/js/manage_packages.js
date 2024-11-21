@@ -164,34 +164,7 @@ $(document).ready(function () {
 
 
 
-    // Handle form submission for both add and edit package form via AJAX
-    $('body').on('submit', '#set_package_info', function (event) {
-        event.preventDefault(); // Prevent the default form submission
 
-        let form = $(this);
-        let formData = form.serialize();
-
-        let actionUrl = form.attr('action');
-        let modalToClose = addPackageModal;
-
-        if ($('#editPackageModal').hasClass('show')) {
-            modalToClose = editPackageModal;
-        }
-
-        $.ajax({
-            url: actionUrl,
-            type: form.attr('method'),
-            data: formData,
-            success: function (response) {
-                alert('Paquete guardado exitosamente');
-                modalToClose.hide();
-            },
-            error: function () {
-                alert('Error al guardar el paquete');
-            }
-        });
-
-    });
 
     $('#closeAddAddressModal').on('click', function () {
         addAddressModal.hide();
