@@ -45,7 +45,6 @@ class ResetPasswordView(MethodView):
             "auth/reset_password.html",
             title="Reestablecer contraseña",
             form=form,
-            url=url_for("auth.reset_password"),
         )
 
     def post(self, token):
