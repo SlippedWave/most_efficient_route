@@ -1,6 +1,7 @@
 from flask import render_template, jsonify, request, redirect, url_for, flash
 from flask.views import MethodView
 from flask_login import current_user
+from datetime import datetime
 
 from app.models import Package
 from app.blueprints.manage_packages.set_package_info_form import SetPackageInfoForm
@@ -34,7 +35,8 @@ class EditPackageView(MethodView):
             package.PCK_special_delivery_instructions = (
                 form.PCK_special_delivery_instructions.data
             )
-
+            package.PCK_last_modified = datetime.now()
+            
             assigned_to_user = form.PCK_USR_assigned_to.data
             address = form.PCK_ADD_addressId.data
 

@@ -17,9 +17,11 @@ def get_pages_by_role():
             {
                 "name": "Mis paquetes a entregar",
                 "url": url_for("select_packages_to_deliver.select_packages_to_deliver"),
-                
             },
-            {"name": "Mi ruta", "url": ""},
+            {
+                "name": "Mi ruta",
+                "url": url_for("get_most_efficient_route.get_most_efficient_route"),
+            },
         ],
     }
 

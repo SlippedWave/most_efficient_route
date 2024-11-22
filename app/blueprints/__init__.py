@@ -4,8 +4,8 @@ ENABLED_VIEWS = [
     'app.blueprints.edit_user_info',
     'app.blueprints.manage_users',
     'app.blueprints.manage_packages',
-    'app.blueprints.select_packages_to_deliver'
-    # 'app.blueprints.get_most_efficient_route'
+    'app.blueprints.select_packages_to_deliver',
+    'app.blueprints.get_most_efficient_route',
 ]
 
 def register_blueprints(app):

@@ -14,10 +14,8 @@ from app.blueprints.select_packages_to_deliver.select_packages_to_deliver_form i
 
 class SelectPackagesToDeliverView(MethodView):
     def get(self):
-        """Renderiza la página con los paquetes disponibles y seleccionados."""
         form = SelectPackagesToDeliverForm()
 
-        # Paquetes disponibles para asignar
         packages = (
             Package.query.options(
                 load_only(
@@ -31,13 +29,12 @@ class SelectPackagesToDeliverView(MethodView):
             .filter(
                 and_(
                     Package.PCK_USR_assigned_to == current_user.USR_userId,
-                    Package.PCK_ST_statusId == 1,  # Estado: Disponible
+                    Package.PCK_ST_statusId == 1,
                 )
             )
             .all()
         )
 
-        # Paquetes ya seleccionados
         selected_packages = (
             Package.query.options(
                 load_only(
@@ -53,7 +50,7 @@ class SelectPackagesToDeliverView(MethodView):
             .filter(
                 and_(
                     Package.PCK_USR_assigned_to == current_user.USR_userId,
-                    Package.PCK_ST_statusId == 2,  # Estado: Asignado
+                    Package.PCK_ST_statusId == 2,
                 )
             )
             .all()
@@ -68,33 +65,32 @@ class SelectPackagesToDeliverView(MethodView):
         )
 
     def post(self):
-        """Procesa los paquetes seleccionados en el formulario."""
         form = SelectPackagesToDeliverForm()
 
         if form.validate_on_submit():
-            # Obtener los IDs seleccionados del formulario
-            selected_packages_ids = form.PCK_packagesId.data.split(",")  # Asegurarse que llegan como lista
-            
+            selected_packages_ids = form.PCK_packagesId.data.split(",")
+
             try:
-                # Actualizar el estado de cada paquete
                 for package_id in selected_packages_ids:
-                    package = Package.query.get_or_404(package_id)  # Buscar el paquete
-                    package.PCK_ST_statusId = 2  # Cambiar el estado a "Asignado"
+                    package = Package.query.get_or_404(package_id)
+                    package.PCK_ST_statusId = 2
                     package.PCK_delivery_date = datetime.now().date()
-                    
-                # Confirmar los cambios en la base de datos
+
                 db.session.commit()
                 flash("¡Cambios registrados exitosamente!", "success")
 
             except Exception as e:
-                db.session.rollback()  # Revertir transacción en caso de error
+                db.session.rollback()
                 flash(f"Error al registrar los cambios: {e}", "danger")
                 return redirect(
                     url_for("select_packages_to_deliver.select_packages_to_deliver")
                 )
 
         else:
-            flash("El formulario contiene errores. Por favor, revise la selección.", "warning")
+            flash(
+                "El formulario contiene errores. Por favor, revise la selección.",
+                "warning",
+            )
 
         return redirect(
             url_for("select_packages_to_deliver.select_packages_to_deliver")
