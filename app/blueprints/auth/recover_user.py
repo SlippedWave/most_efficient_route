@@ -19,7 +19,6 @@ def generate_password_reset_link(email):
     token = generate_password_reset_token(email)
     return url_for("auth.reset_password", token=token, _external=True)
 
-
 class RecoverUserView(MethodView):
 
     def get(self):
