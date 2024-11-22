@@ -19,6 +19,7 @@ def generate_password_reset_link(email):
     token = generate_password_reset_token(email)
     return url_for("auth.reset_password", token=token, _external=True)
 
+
 class RecoverUserView(MethodView):
 
     def get(self):
@@ -52,10 +53,11 @@ class RecoverUserView(MethodView):
             if user:
 
                 msg = Message(
-                    subject="prueba",
+                    subject="Reestablece tu contraseña de Beaver Deliver.",
                     sender=os.environ["MAIL_USERNAME"],
                     recipients=[USR_email],
                 )
+                "../../"
                 msg.html = render_template(
                     "mail/restore_password_email.html",
                     name=user.USR_name,
