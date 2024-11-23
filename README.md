@@ -23,3 +23,7 @@ Within Anaconda prompt, execute the following commands in order to configure the
 (base) root> .venv\Scripts\activate
 (venv) (base) root> pip install -r requirements.txt
 ```
+**3. Run development server**
+```
+(venv) (base) root> flask run
+```
