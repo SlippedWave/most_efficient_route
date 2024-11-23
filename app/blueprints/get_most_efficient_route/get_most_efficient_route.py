@@ -8,9 +8,7 @@ from sqlalchemy import and_
 from datetime import datetime
 import os
 
-from app.models import Package, Address
-from app.extensions.database import db
-
+from app.models import Package
 
 class GetMostEfficentRouteView(MethodView):
     def get(self):
@@ -35,27 +33,35 @@ class GetMostEfficentRouteView(MethodView):
             .all()
         )
 
-        unique_addresses = (
-            db.session.query(Address)
-            .join(Package, Package.PCK_ADD_addressId == Address.ADD_addressId)
-            .filter(
-                and_(
-                    Package.PCK_USR_assigned_to == current_user.USR_userId,
-                    Package.PCK_ST_statusId == 2,  # Filter by package status
-                )
-            )
-            .distinct()
-            .all()
-        )
+        unique_addresses = {}
+        for package in packages_to_deliver:
+            address = str(package.address)
+            if address not in unique_addresses:
+                unique_addresses[address] = {
+                    "address": address,
+                    "packages": [],
+                    "address_id": package.PCK_ADD_addressId
+                }
 
+            unique_addresses[address]["packages"].append(
+                {
+                    "PCK_packageId": package.PCK_packageId,
+                    "PCK_client_name": package.PCK_client_name,
+                    "PCK_client_phone_num": package.PCK_client_phone_num,
+                    "PCK_delivery_date": package.PCK_delivery_date,
+                    "PCK_last_modified": package.PCK_last_modified,
+                    "PCK_special_delivery_instructions": package.PCK_special_delivery_instructions,
+                }
+            )
+
+        unique_addresses_list = list(unique_addresses.values())
 
         return render_template(
             "get_most_efficient_route/get_most_efficient_route.html",
             packages_to_deliver=packages_to_deliver,
-            unique_addresses=[{"address": str(address)} for address in unique_addresses],
-            GOOGLE_MAPS_API_KEY=os.environ.get('GOOGLE_MAPS_API_KEY'),
+            unique_addresses=unique_addresses_list,
+            GOOGLE_MAPS_API_KEY=os.environ.get("GOOGLE_MAPS_API_KEY"),
         )
-
 
     def post(self):
 

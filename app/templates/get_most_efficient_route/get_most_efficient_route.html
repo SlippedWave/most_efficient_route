@@ -2,10 +2,13 @@
 
 {% block head %}
 {{ super() }}
+<!-- DataTables CSS -->
+<link href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" rel="stylesheet">
+<!-- Custom Styles -->
 <link href="{{ url_for('static', filename='styles/mapstyle.css') }}" rel="stylesheet">
-<script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}"></script>
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/manage_users.css') }}">
-
+<link href="{{ url_for('static', filename='styles/manage_users.css') }}" rel="stylesheet">
+<!-- Google Maps API -->
+<script loading=async src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}"></script>
 {% endblock %}
 
 {% block middle_column %}
@@ -13,14 +16,16 @@
     <div class="row">
         <div class="col-12">
             <div class="hero-unit p-5 border border-2 rounded-3 shadow-lg bg-light">
+                <!-- Page Title -->
                 <h1 class="display-4 mb-4 text-center">Obtener la ruta</h1>
+
+                <!-- Map Section -->
                 <div id="map" style="height: 500px;"></div>
-                <div id="directions-panel" style="margin-top: 10px;"></div>
-                <div id="route-summary"
-                    style="margin-top: 20px; background: #f9f9f9; padding: 10px; border-radius: 5px;"></div>
+                <div id="google-maps-link-container">
+                </div>
 
-
-                <div class="table-responsive">
+                <!-- Data Table Section -->
+                <div class="table-responsive mt-4">
                     <table id="management_table" class="table table-striped table-bordered">
                         <thead>
                             <tr>
@@ -45,11 +50,14 @@
                                 <td>
                                     {% if package.PCK_delivery_date %}
                                     {{ package.PCK_delivery_date.strftime('%Y-%m-%d') }}
-                                    {% else %} N / A {% endif %}
+                                    {% else %}
+                                    N / A
+                                    {% endif %}
                                 </td>
                                 <td>{{ package.PCK_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
                                 <td>
-                                    <button class="btn btn-warning edit-package-btn"
+                                    <button class="btn btn-warning"
+                                        onclick="openSetStatusModal('{{ package.PCK_packageId }}')"
                                         data-id="{{ package.PCK_packageId }}">
                                         Modificar
                                     </button>
@@ -63,19 +71,74 @@
         </div>
     </div>
 </div>
-
-
 {% endblock %}
-
 
 {% block modals %}
-
+<div id="package-modal" class="modal fade" tabindex="-1" aria-labelledby="packageModalLabel" aria-hidden="true">
+    <div class="modal-lg modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="packageModalLabel">Detalles de los paquete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table id="package-details-table" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre del cliente</th>
+                                <th>Teléfono</th>
+                                <th>Fecha de entrega</th>
+                                <th>Instrucciones de entrega</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="package-set-status-modal" class="modal fade" tabindex="-1" aria-labelledby="packageModalLabel" aria-hidden="true">
+    <div class="modal-lg modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="packageModalLabel">Detalles de los paquete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table id="package-details-table" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre del cliente</th>
+                                <th>Teléfono</th>
+                                <th>Fecha de entrega</th>
+                                <th>Instrucciones de entrega</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
 {% block scripts %}
 <script>
-    // Pasar `packages_to_deliver` al script JavaScript como JSON
     const uniqueAddresses = JSON.parse('{{ unique_addresses | tojson | safe }}');
-    
 </script>
+
 <script src="{{ url_for('static', filename='js/maps.js') }}"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/2.1.0/js/dataTables.select.min.js"></script>
+<script src="{{ url_for('static', filename='js/get_most_efficient_route.js') }}"></script>
 {% endblock %}
