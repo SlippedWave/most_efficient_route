@@ -12,50 +12,50 @@
         <div class="col-12">
             <div class="hero-unit p-5 border border-2 rounded-3 shadow-lg bg-light">
                 <h1 class="display-4 mb-4 text-center">Administrar Usuarios</h1>
-
                 <!-- Register User Button -->
                 <div class="mb-4">
                     <button type="button" class="btn btn-primary" id="add-record-btn">
                         Registrar nuevo usuario
                     </button>
                 </div>
-
                 <!-- Users Table -->
                 <div>
-                    <table id="management_table" class="mytable table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre(s)</th>
-                                <th>Apellidos</th>
-                                <th>Correo</th>
-                                <th>Teléfono</th>
-                                <th>Estatus</th>
-                                <th>Permisos</th>
-                                <th>Última vez modificado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for user in users %}
-                            <tr>
-                                <td>{{ user.USR_userId }}</td>
-                                <td>{{ user.USR_name }}</td>
-                                <td>{{ user.USR_last_name }}</td>
-                                <td>{{ user.USR_email }}</td>
-                                <td>{{ user.USR_telephone }}</td>
-                                <td>{{ user.status.ST_value }}</td>
-                                <td>{{ user.permit.PMT_type }}</td>
-                                <td>{{ user.USR_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-                                <td>
-                                    <button class="btn btn-warning edit-user-btn" data-id="{{ user.USR_userId }}">
-                                        <i class="bi bi-pencil-square"></i> Modificar
-                                    </button>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table id="management_table" class="mytable table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre(s)</th>
+                                    <th>Apellidos</th>
+                                    <th>Correo</th>
+                                    <th>Teléfono</th>
+                                    <th>Estatus</th>
+                                    <th>Permisos</th>
+                                    <th>Última vez modificado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                <tr>
+                                    <td>{{ user.USR_userId }}</td>
+                                    <td>{{ user.USR_name }}</td>
+                                    <td>{{ user.USR_last_name }}</td>
+                                    <td>{{ user.USR_email }}</td>
+                                    <td>{{ user.USR_telephone }}</td>
+                                    <td>{{ user.status.ST_value }}</td>
+                                    <td>{{ user.permit.PMT_type }}</td>
+                                    <td>{{ user.USR_last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                    <td>
+                                        <button class="btn btn-warning edit-user-btn" data-id="{{ user.USR_userId }}">
+                                            <i class="bi bi-pencil-square"></i> Modificar
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

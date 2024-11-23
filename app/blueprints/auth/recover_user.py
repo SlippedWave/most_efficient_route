@@ -57,7 +57,6 @@ class RecoverUserView(MethodView):
                     sender=os.environ["MAIL_USERNAME"],
                     recipients=[USR_email],
                 )
-                "../../"
                 msg.html = render_template(
                     "mail/restore_password_email.html",
                     name=user.USR_name,

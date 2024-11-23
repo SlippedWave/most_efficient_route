@@ -34,7 +34,7 @@ class Address(db.Model):
     def __repr__(self):
         return (
             f"{self.ADD_street}, No. {self.ADD_ext_number},"
-            f"Col. {self.ADD_neighborhood}, {self.ADD_zip_code}, {self.ADD_city}"
+            f"Col. {self.ADD_neighborhood}, {self.ADD_zip_code}, {self.ADD_city}, {self.ADD_state}"
         )
 
 

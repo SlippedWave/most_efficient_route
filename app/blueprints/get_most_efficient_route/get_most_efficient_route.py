@@ -1,11 +1,14 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, jsonify, redirect, url_for
+from dataclasses import dataclass
+
 from flask.views import MethodView
 from flask_login import current_user
 from sqlalchemy.orm import load_only, joinedload
 from sqlalchemy import and_
 from datetime import datetime
+import os
 
-from app.models import Package
+from app.models import Package, Address
 from app.extensions.database import db
 
 
@@ -32,10 +35,27 @@ class GetMostEfficentRouteView(MethodView):
             .all()
         )
 
+        unique_addresses = (
+            db.session.query(Address)
+            .join(Package, Package.PCK_ADD_addressId == Address.ADD_addressId)
+            .filter(
+                and_(
+                    Package.PCK_USR_assigned_to == current_user.USR_userId,
+                    Package.PCK_ST_statusId == 2,  # Filter by package status
+                )
+            )
+            .distinct()
+            .all()
+        )
+
+
         return render_template(
             "get_most_efficient_route/get_most_efficient_route.html",
             packages_to_deliver=packages_to_deliver,
+            unique_addresses=[{"address": str(address)} for address in unique_addresses],
+            GOOGLE_MAPS_API_KEY=os.environ.get('GOOGLE_MAPS_API_KEY'),
         )
+
 
     def post(self):
 
