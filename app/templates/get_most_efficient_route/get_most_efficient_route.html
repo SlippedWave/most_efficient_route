@@ -33,6 +33,7 @@
                                 <th>Dirección</th>
                                 <th>Nombre del cliente</th>
                                 <th>Teléfono</th>
+                                <th>Estatus</th>
                                 <th>Indicaciones especiales</th>
                                 <th>Fecha de entrega estipulada</th>
                                 <th>Última vez modificado</th>
@@ -41,11 +42,12 @@
                         </thead>
                         <tbody>
                             {% for package in packages_to_deliver %}
-                            <tr>
+                            <tr id="{{ package.PCK_packageId }}">
                                 <td>{{ package.PCK_packageId }}</td>
                                 <td>{{ package.address }}</td>
                                 <td>{{ package.PCK_client_name }}</td>
                                 <td>{{ package.PCK_client_phone_num }}</td>
+                                <td>{{ package.status.ST_value }}</td>
                                 <td>{{ package.PCK_special_delivery_instructions }}</td>
                                 <td>
                                     {% if package.PCK_delivery_date %}
@@ -89,6 +91,7 @@
                                 <th>ID</th>
                                 <th>Nombre del cliente</th>
                                 <th>Teléfono</th>
+                                <th>Estatus</th>
                                 <th>Fecha de entrega</th>
                                 <th>Instrucciones de entrega</th>
                                 <th>Acciones</th>
@@ -102,31 +105,33 @@
         </div>
     </div>
 </div>
-<div id="package-set-status-modal" class="modal fade" tabindex="-1" aria-labelledby="packageModalLabel" aria-hidden="true">
+<div id="package-set-status-modal" class="modal fade" tabindex="-1" aria-labelledby="packageModalLabel"
+    aria-hidden="true">
     <div class="modal-lg modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="packageModalLabel">Detalles de los paquete</h5>
+                <h5 class="modal-title" id="packageModalLabel">Cambiar estado de paquete</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <table id="package-details-table" class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre del cliente</th>
-                                <th>Teléfono</th>
-                                <th>Fecha de entrega</th>
-                                <th>Instrucciones de entrega</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+            <form onsubmit="event.preventDefault(); setNewStatusPackage();">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Estado</label>
+                        <div>
+                            <input type="hidden" id="value_packageId" value="">
+                            <select class="form-select" aria-label="Selecciona estado" id="value_new_package_status">
+                                <option selected value="3">ENTREGADO</option>
+                                <option value="8">ENTREGA FALLIDA</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="modal-footer">
+                    <div class="mb-3">
+                        <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -134,7 +139,8 @@
 
 {% block scripts %}
 <script>
-    const uniqueAddresses = JSON.parse('{{ unique_addresses | tojson | safe }}');
+    var uniqueAddresses = JSON.parse('{{ unique_addresses | tojson | safe }}');
+    var packagesToDeliver
 </script>
 
 <script src="{{ url_for('static', filename='js/maps.js') }}"></script>

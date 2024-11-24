@@ -319,15 +319,14 @@ async function geocodeAndDisplayRoute(addresses) {
             const location = await geocodeAddress(geocoder, addresses[i].address);
             addresses[i].location = location;
         } catch (error) {
-            console.error("Geocoding failed for address", [i].address, error);
+            console.error("Geocoding falló para la dirección ", [i].address, error);
         }
     }
 
     if (addresses.length === addresses.length) {
-        console.log(addresses);
         drawRoute(addresses);
     } else {
-        console.error("Some addresses could not be geocoded.");
+        console.error("Algunas direcciones no pudieron ser codificadas.");
     }
 }
 
@@ -338,7 +337,7 @@ function geocodeAddress(geocoder, address) {
             if (status === "OK") {
                 resolve(results[0].geometry.location);
             } else {
-                reject(new Error(`Geocode failed for ${address}: ${status}`));
+                reject(new Error(`Geocode falló en ${address}: ${status}`));
             }
         });
     });
@@ -351,29 +350,26 @@ function drawRoute(addresses) {
     }));
 
     const request = {
-        origin: addresses[0].location, // Start location
-        destination: addresses[addresses.length - 1].location, // End location
-        waypoints: waypoints, // Waypoints for the route
-        travelMode: "DRIVING", // Travel mode
-        optimizeWaypoints: true, // Optimize the route
+        origin: addresses[0].location,
+        destination: addresses[addresses.length - 1].location,
+        waypoints: waypoints,
+        travelMode: "DRIVING",
+        optimizeWaypoints: true,
         drivingOptions: {
-            departureTime: new Date(), // Current time
-            trafficModel: "bestguess", // Traffic model
+            departureTime: new Date(),
+            trafficModel: "bestguess",
         },
     };
 
     directionsService.route(request, (result, status) => {
         if (status === "OK") {
-            console.log(result);
 
-            // Get the optimized waypoint order
             const optimizedOrder = result.routes[0].waypoint_order;
 
-            // Reorder locations based on the optimized order of waypoints
             const optimizedLocations = [
-                addresses[0], // Start location
+                addresses[0],
                 ...optimizedOrder.map(index => addresses[index + 1]),
-                addresses[addresses.length - 1], // End location
+                addresses[addresses.length - 1],
             ];
 
             const optimizedAddressMap = optimizedLocations.reduce((map, locationData) => {
@@ -385,14 +381,13 @@ function drawRoute(addresses) {
                 return map;
             }, {});
 
-            console.log(optimizedAddressMap);
             addCustomMarkers(optimizedAddressMap);
             const googleMapsUrl = generateGoogleMapsUrl(optimizedLocations);
             displayGoogleMapsLink(googleMapsUrl);
 
             directionsRenderer.setDirections(result);
         } else {
-            console.error("Directions request failed:", status);
+            console.error("Falló request de direcciones:", status);
         }
     });
 }
@@ -412,7 +407,7 @@ function displayGoogleMapsLink(url) {
     const link = document.createElement("a");
     link.href = url;
     link.target = "_blank";
-    link.textContent = "Open this route in Google Maps";
+    link.textContent = "Abrir esta ruta en Google Maps";
     linkContainer.innerHTML = '';
     linkContainer.appendChild(link);
 }
@@ -424,7 +419,6 @@ function addCustomMarkers(optimizedAddressMap) {
         const add = locationData.address;
         const address_id = locationData.address_id;
 
-        // Create the marker
         const marker = new google.maps.Marker({
             position: location,
             map: map,
@@ -434,18 +428,21 @@ function addCustomMarkers(optimizedAddressMap) {
                 : "https://maps.google.com/mapfiles/ms/icons/red-dot.png"
         });
 
-        // Create info window content
         const infoWindowContent = index !== 0
-            ? ` 
-                <div>
-                    <p><strong>Ubicación:</strong> ${add}</p>
-                    <button class="btn btn-primary" onclick="openPackageModal(${address_id})">View Packages</button>
-                </div>`
-            : `
-                <div>
-                    <p><strong>Ubicación:</strong> ${add}</p>
-                    <p><strong>Esta es la matriz</strong></p>
-                </div>`;
+            ?
+            ` 
+            <div>
+                <p><strong>Ubicación:</strong> ${add}</p>
+                <button class="btn btn-primary" onclick="openPackageModal(${address_id})">View Packages</button>
+            </div>
+            `
+            :
+            `
+            <div>
+                <p><strong>Ubicación:</strong> ${add}</p>
+                <p><strong>Esta es la matriz</strong></p>
+            </div>
+            `;
 
         const infoWindow = new google.maps.InfoWindow({
             content: infoWindowContent,
@@ -464,23 +461,23 @@ function openPackageModal(address_id) {
 
     const packageData = uniqueAddresses.find(address => address.address_id === address_id)?.packages;
 
-    // Clear previous content
     tableBody.innerHTML = '';
 
-    // Check if there are packages to display
     if (packageData && packageData.length > 0) {
         packageData.forEach(pkg => {
             const row = document.createElement("tr");
+            row.id = pkg.PCK_packageId;
             row.innerHTML = `
                 <td>${pkg.PCK_packageId || 'N/A'}</td>
                 <td>${pkg.PCK_client_name || 'N/A'}</td>
                 <td>${pkg.PCK_client_phone_num || 'N/A'}</td>
+                <td>${pkg.status || 'N/A'}</td>
                 <td>${pkg.PCK_delivery_date || 'N/A'}</td>
                 <td>${pkg.PCK_special_delivery_instructions || 'None'}</td>
                 <td>
                     <button class="btn btn-warning"
                         onclick="openSetStatusModal('${pkg.PCK_packageId}')"
-                        data-id="{{ package.PCK_packageId }}">
+                        data-id="${pkg.PCK_packageId}">
                         Modificar
                     </button>
                 </td>
@@ -488,15 +485,13 @@ function openPackageModal(address_id) {
             tableBody.appendChild(row);
         });
     } else {
-        // No packages found
         const emptyRow = document.createElement("tr");
         emptyRow.innerHTML = `
-            <td colspan="5" class="text-center">No package details available.</td>
+            <td colspan="5" class="text-center">No hay paquetes disponibles.</td>
         `;
         tableBody.appendChild(emptyRow);
     }
 
-    // Show the modal
     const modal = new bootstrap.Modal(document.getElementById("package-modal"), {
         backdrop: 'static',
         keyboard: true,
@@ -504,15 +499,61 @@ function openPackageModal(address_id) {
     modal.show();
 }
 
+function openSetStatusModal(PCK_packageId) {
+    let input_packageId = document.getElementById("value_packageId").value = PCK_packageId;
+    const modal = new bootstrap.Modal(document.getElementById("package-set-status-modal"), {
+        backdrop: 'static',
+        keyboard: true,
+    })
+    modal.show();
+};
 
-function closePackageModal() {
-    const modal = document.getElementById("package-modal");
-    modal.style.display = "none";
+function setNewStatusPackage() {
+    let PCK_packageId = document.getElementById("value_packageId").value;
+    let new_package_status = document.getElementById("value_new_package_status").value;
+
+    if (!PCK_packageId || !new_package_status) {
+        console.log("ERROR, NO ESTAN LOS DATOS")
+        return;
+    }
+
+    $.ajax({
+        url: '/ver_mi_ruta_de_entrega',
+        type: 'POST',
+        data: {
+            packageId: PCK_packageId,
+            status: new_package_status
+        },
+        success: function () {
+            updateStatusInTable(PCK_packageId, new_package_status, '#package-details-table');
+            updateStatusInTable(PCK_packageId, new_package_status, '#management_table');
+            const modal = bootstrap.Modal.getInstance(document.getElementById("package-set-status-modal"));
+            modal.hide();
+
+        },
+        error: function (xhr, status, error) {
+            bootbox.alert("Failed to update package status. Please try again.");
+        }
+    });
 }
 
-function openNewModal(PCK_packageId) {
+function updateStatusInTable(packageId, newStatus, table) {
+    const tableRow = document.querySelector(`${table} tbody tr[id="${packageId}"]`);
 
-};
+    if (tableRow) {
+        const statusCell = tableRow.querySelector('td:nth-child(4)');
+
+        if (statusCell) {
+            statusCell.textContent = newStatus == 3 ? "ENTREGADO" : "POR ENTREGAR";
+        } else {
+            console.warn(`Status cell not found for package ID ${packageId}.`);
+        }
+    } else {
+        console.warn(`Row for package ID ${packageId} not found.`);
+    }
+}
+
+
 
 
 window.onload = initMap;
