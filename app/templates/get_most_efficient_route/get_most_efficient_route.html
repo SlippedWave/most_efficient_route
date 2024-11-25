@@ -16,12 +16,11 @@
     <div class="row">
         <div class="col-12">
             <div class="hero-unit p-5 border border-2 rounded-3 shadow-lg bg-light">
-                <!-- Page Title -->
                 <h1 class="display-4 mb-4 text-center">Obtener la ruta</h1>
 
-                <!-- Map Section -->
                 <div id="map" style="height: 500px;"></div>
-                <div id="google-maps-link-container">
+
+                <div id="google-maps-link-container" class="text-center mt-3">
                 </div>
 
                 <!-- Data Table Section -->
@@ -140,7 +139,6 @@
 {% block scripts %}
 <script>
     var uniqueAddresses = JSON.parse('{{ unique_addresses | tojson | safe }}');
-    var packagesToDeliver
 </script>
 
 <script src="{{ url_for('static', filename='js/maps.js') }}"></script>

@@ -8,6 +8,8 @@ function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         center: defaultLocation,
         zoom: 12,
+        streetViewControl: false,
+        mapTypeControl: false,
         styles: [
             {
                 "elementType": "geometry",
@@ -404,12 +406,15 @@ function generateGoogleMapsUrl(locations) {
 
 function displayGoogleMapsLink(url) {
     const linkContainer = document.getElementById("google-maps-link-container");
-    const link = document.createElement("a");
-    link.href = url;
-    link.target = "_blank";
-    link.textContent = "Abrir esta ruta en Google Maps";
     linkContainer.innerHTML = '';
-    linkContainer.appendChild(link);
+
+    const button = document.createElement("a");
+    button.href = url;
+    button.target = "_blank"; 
+    button.className = "btn btn-primary btn-lg mt-3"; 
+    button.textContent = "Abrir esta ruta en Google Maps";
+
+    linkContainer.appendChild(button);
 }
 
 function addCustomMarkers(optimizedAddressMap) {
@@ -433,7 +438,7 @@ function addCustomMarkers(optimizedAddressMap) {
             ` 
             <div>
                 <p><strong>Ubicación:</strong> ${add}</p>
-                <button class="btn btn-primary" onclick="openPackageModal(${address_id})">View Packages</button>
+                <button class="btn btn-primary" onclick="openPackageModal(${address_id})">Ver Paquetes</button>
             </div>
             `
             :
@@ -448,14 +453,12 @@ function addCustomMarkers(optimizedAddressMap) {
             content: infoWindowContent,
         });
 
-        // Add click listener to marker
         marker.addListener("click", () => {
             infoWindow.open(map, marker);
         });
     });
 }
 
-// Open the package details modal
 function openPackageModal(address_id) {
     const tableBody = document.querySelector("#package-details-table tbody");
 
@@ -524,7 +527,9 @@ function setNewStatusPackage() {
             packageId: PCK_packageId,
             status: new_package_status
         },
-        success: function () {
+        success: function (response) {
+            uniqueAddresses = response.unique_addresses
+
             updateStatusInTable(PCK_packageId, new_package_status, '#package-details-table');
             updateStatusInTable(PCK_packageId, new_package_status, '#management_table');
             const modal = bootstrap.Modal.getInstance(document.getElementById("package-set-status-modal"));
@@ -544,7 +549,7 @@ function updateStatusInTable(packageId, newStatus, table) {
         const statusCell = tableRow.querySelector('td:nth-child(4)');
 
         if (statusCell) {
-            statusCell.textContent = newStatus == 3 ? "ENTREGADO" : "POR ENTREGAR";
+            statusCell.textContent = newStatus == 3 ? "ENTREGADO" : "ENTREGA FALLIDA";
         } else {
             console.warn(`Status cell not found for package ID ${packageId}.`);
         }
