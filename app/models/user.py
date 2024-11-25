@@ -11,6 +11,7 @@ class User(db.Model):
     USR_email = db.Column(db.String(120), unique=True, nullable=False)
     USR_password = db.Column(db.String(250), nullable=False)
     USR_telephone = db.Column(db.String(15))
+    USR_gender = db.Column(db.Integer)
     USR_name = db.Column(db.String(80), nullable=False)
     USR_last_name = db.Column(db.String(80), nullable=False)
     USR_ST_statusId = db.Column(db.Integer, db.ForeignKey("status.ST_statusId"))
@@ -34,6 +35,7 @@ class User(db.Model):
         plain_password,
         USR_name,
         USR_last_name,
+        USR_gender,
         USR_modified_by,
         USR_telephone=None,
         USR_address=None,
@@ -44,6 +46,7 @@ class User(db.Model):
         self.set_password(plain_password)
         self.USR_name = USR_name
         self.USR_last_name = USR_last_name
+        self.USR_gender = USR_gender
         self.USR_telephone = USR_telephone
         self.USR_address = USR_address
         self.USR_PER_permitId = USR_PER_permitId

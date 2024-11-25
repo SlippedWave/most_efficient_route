@@ -27,6 +27,7 @@
                                     <th>ID</th>
                                     <th>Nombre(s)</th>
                                     <th>Apellidos</th>
+                                    <th>Género</th>
                                     <th>Correo</th>
                                     <th>Teléfono</th>
                                     <th>Estatus</th>
@@ -41,6 +42,15 @@
                                     <td>{{ user.USR_userId }}</td>
                                     <td>{{ user.USR_name }}</td>
                                     <td>{{ user.USR_last_name }}</td>
+                                    <td>
+                                        {% if user.USR_gender == 0 %}
+                                            Masculino
+                                        {% elif user.USR_gender == 1 %}
+                                            Femenino
+                                        {% else %}
+                                            Otro
+                                        {% endif %}
+                                    </td>
                                     <td>{{ user.USR_email }}</td>
                                     <td>{{ user.USR_telephone }}</td>
                                     <td>{{ user.status.ST_value }}</td>

@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from flask_migrate import Migrate
-from flask_debugtoolbar import DebugToolbarExtension
+
 from app.blueprints import register_blueprints
 from flask_login import LoginManager, current_user
 import logging
@@ -42,10 +42,6 @@ app.jinja_env.globals["authorized"] = authorized
 migrate = Migrate(app, db)
 
 from app.models import *
-
-# Enable debug toolbar only in debug mode
-if app.debug:
-    DebugToolbarExtension(app)
 
 # Register blueprints
 register_blueprints(app)

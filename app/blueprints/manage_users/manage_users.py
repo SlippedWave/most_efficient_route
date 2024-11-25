@@ -15,6 +15,7 @@ class ManageUsersView(MethodView):
                 User.USR_email,
                 User.USR_telephone,
                 User.USR_last_modified,
+                User.USR_gender,
             ),
             joinedload(User.permit).load_only(
                 Permit.PMT_type 

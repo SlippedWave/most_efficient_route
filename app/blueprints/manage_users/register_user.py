@@ -30,6 +30,7 @@ class RegisterUserView(MethodView):
                     USR_email=form.USR_email.data,
                     plain_password=form.plain_password.data,
                     USR_name=form.USR_name.data,
+                    USR_gender=form.USR_gender.data,
                     USR_last_name=form.USR_last_name.data,
                     USR_telephone=form.USR_telephone.data,
                     USR_address=form.USR_address.data,

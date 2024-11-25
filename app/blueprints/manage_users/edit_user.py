@@ -47,6 +47,7 @@ class EditUserView(MethodView):
             user.USR_address = form.USR_address.data       
             user.USR_PER_permitId = form.permit.data.PMT_permitId
             user.USR_ST_statusId = form.status.data.ST_statusId
+            user.USR_gender = form.USR_gender.data
             user.USR_modified_by = current_user.USR_userId
             user.USR_last_modified = datetime.now()
 
