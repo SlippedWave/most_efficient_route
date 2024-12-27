@@ -4,7 +4,7 @@ This project was born as part of the Software Engineering course at CUCEI.
 
 ## Contributors
 
-![Paco](https://img.shields.io/badge/GitHub-Paco-181717?style=for-the-badge&logo=github)  ![Max](https://img.shields.io/badge/GitHub-Max-181717?style=for-the-badge&logo=github) ![Ruesga](https://img.shields.io/badge/GitHub-Ruesga-181717?style=for-the-badge&logo=github) ![Alan](https://img.shields.io/badge/GitHub-Alan-181717?style=for-the-badge&logo=github) ![Christian](https://img.shields.io/badge/GitHub-Christian-181717?style=for-the-badge&logo=github)  
+![SlippedWave](https://img.shields.io/badge/GitHub-Paco-181717?style=for-the-badge&logo=github)  ![Max](https://img.shields.io/badge/GitHub-Max-181717?style=for-the-badge&logo=github) ![Ruesga](https://img.shields.io/badge/GitHub-Ruesga-181717?style=for-the-badge&logo=github) ![Alan](https://img.shields.io/badge/GitHub-Alan-181717?style=for-the-badge&logo=github) ![Christian](https://img.shields.io/badge/GitHub-Christian-181717?style=for-the-badge&logo=github)  
 
 ## How to configure?
 Make sure you have the following installed:
